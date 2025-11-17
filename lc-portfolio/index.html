@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lucas Carrasco – Engineering Portfolio</title>
+  <meta name="description" content="Engineering portfolio by Lucas Carrasco: networks, distributed systems, and energy integration projects.">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta property="og:title" content="Lucas Carrasco – Engineering Portfolio">
+  <meta property="og:description" content="Independent engineering projects: networks, systems, energy.">
+  <meta property="og:type" content="website">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html">LC</a>
+      <nav class="menu" id="menu">
+        <a href="projects.html">Projects</a>
+        <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:lucas@example.com">Contact</a>
+      </nav>
+      <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero section">
+      <div class="container grid two hero-layout">
+        <!-- Columna izquierda: texto principal -->
+        <div>
+          <h1>Hi, I’m <span class="accent">Lucas Carrasco</span></h1>
+          <p class="lead">
+            Telecommunications Engineering student (ICAI) focused on
+            <strong>network systems</strong>, <strong>distributed infrastructures</strong>,
+            and <strong>energy integration</strong>. This portfolio documents independent
+            engineering projects I’ve designed and built.
+          </p>
+          <div class="actions">
+            <a class="btn" href="projects.html">View projects</a>
+            <a class="btn ghost" href="assets/CV_LucasCarrasco.pdf" target="_blank" rel="noopener">
+              Download CV
+            </a>
+          </div>
+        </div>
+
+        <!-- Columna derecha: "CV snapshot" -->
+        <aside class="panel hero-aside">
+          <h2 class="hero-subtitle">At a glance</h2>
+          <ul class="pill-list">
+            <li><span>🎓</span>Telecommunications Engineering (ICAI – Comillas)</li>
+            <li><span>🛰️</span>Networks &amp; distributed systems</li>
+            <li><span>🛠️</span>Hands-on projects: homelab, IPv6 Multihoming, 17 kWp solar ESS</li>
+            <li><span>🌍</span>Based in Madrid, Spain</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SELECTED PROJECTS -->
+    <section class="section">
+      <div class="container">
+        <h2>Selected projects</h2>
+        <p class="muted">
+          A few representative projects. You can find more details in the full projects section.
+        </p>
+
+        <div class="selected-projects">
+          <article>
+            <h3><a href="solar.html">17 kWp Residential Solar With Battery &amp; Backup</a></h3>
+            <p class="muted">Energy systems • PV design • Victron ESS • Storage</p>
+            <p>
+              Design and deployment of a residential-scale PV + storage system with 17 kWp solar,
+              a 15 kVA inverter and 28.8 kWh LiFePO₄, including PVGIS modelling, string layout,
+              protection design and commissioning.
+            </p>
+          </article>
+
+          <!-- Puedes añadir más artículos aquí si quieres -->
+          <!--
+          <article>
+            <h3><a href="saas.html">Technical Tools SaaS Platform</a></h3>
+            <p class="muted">Web • Spring Boot • React</p>
+            <p>
+              Early-stage SaaS for technical calculation tools with multi-tenant architecture and React frontend.
+            </p>
+          </article>
+          -->
+        </div>
+
+        <div class="actions" style="margin-top: 24px;">
+          <a class="btn ghost" href="projects.html">View all projects</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Lucas Carrasco • <a href="projects.html">Projects</a></p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

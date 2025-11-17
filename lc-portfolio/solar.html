@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>17 kWp Residential Solar With Battery & Backup – Lucas Carrasco</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html">LC</a>
+      <nav class="menu" id="menu">
+        <a href="projects.html">Projects</a>
+        <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:lucas@example.com">Contact</a>
+      </nav>
+      <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main class="container section">
+    <a class="breadcrumb" href="projects.html">← All projects</a>
+    <h1>17 kWp Residential Solar With Battery &amp; Backup</h1>
+    <p class="muted">2025 • Energy systems, PV design, Victron ESS, Storage</p>
+
+    <div class="grid two">
+      <!-- MAIN COLUMN -->
+      <section>
+        <h2>Summary</h2>
+        <p>
+          This project consists of the complete design and deployment of a
+          <strong>17 kWp residential solar energy system</strong> integrating multi-orientation PV arrays,
+          a <strong>15 kVA inverter</strong>, and <strong>28.8 kWh of lithium storage</strong>.
+          The system was engineered to improve reliability during frequent grid outages, reduce annual
+          energy costs, and maximise self-consumption through thermal load shifting and real-time
+          energy management. It includes full PV modelling (PVGIS), electrical sizing, string design,
+          shading mitigation, inverter and battery integration, and system-level optimisation for
+          long-term efficiency and resilience.
+        </p>
+
+        <h2>Motivation</h2>
+        <p>
+          This engineering project involved the full design and implementation of a
+          residential-scale solar energy system with the following objectives:
+        </p>
+        <ul>
+          <li>Reduce grid dependency.</li>
+          <li>Mitigate frequent power outages, which had previously caused appliance failures.</li>
+          <li>Decrease annual electricity costs, historically around <strong>€4,500</strong> per year.</li>
+        </ul>
+
+        <h2>Requirements</h2>
+
+        <h3>Power Needs</h3>
+        <ul>
+          <li>An energy demand of ≈<strong>3,000 kWh per month</strong> during summer and winter.</li>
+          <li>An energy demand of ≈<strong>1,000 kWh per month</strong> during autumn and spring.</li>
+          <li>
+            A historical peak power demand of <strong>11.62 kW</strong>, according to the utility meter.
+          </li>
+        </ul>
+
+        <h3>Location Characteristics</h3>
+        <ul>
+          <li>
+            Roof capacity for <strong>32 panels (2×1 m)</strong>, using the West, South and East slopes.
+          </li>
+          <li>
+            Two rooftop chimneys, causing shading that must be mitigated.
+          </li>
+          <li>
+            The main electrical panel is located in the basement.
+          </li>
+        </ul>
+
+        <h3>Additional Considerations</h3>
+        <p>
+          The building is equipped with a central heating and cooling radiant floor heating system,
+          powered by an air to water heat pump. This system has a strong buffering effect, which allows
+          for heating and cooling scheduling in order to maximise solar utilisation. This reduces the
+          amount of stored energy required overnight.
+        </p>
+
+        <h2>Design</h2>
+
+        <h3>Solar Plant Design</h3>
+        <p>
+          A total of <strong>32 × JA Solar 530 W</strong> panels were installed, maximising the rooftop
+          capacity. A previous yield estimate was performed using
+          <strong>PVGIS</strong>, a free online solar tool developed by the European Joint Research Centre.
+          The estimated production would cover the entirety of the property’s demand for seven months,
+          from April to October, with approximately <strong>10% surplus</strong>, which will make up for
+          the degradation of the panels over time. The months from November to March would need support
+          from the grid, with a coverage close to <strong>50%</strong>.
+        </p>
+
+        <!-- FOTO 1: después de Solar Plant Design -->
+        <figure class="project-hero">
+          <img src="assets/img/solar/pvgis.png" alt="PVGIS yield estimation for the 17 kWp solar system">
+          <figcaption class="muted">
+            PVGIS-based production estimate for the 17 kWp multi-orientation PV array
+          </figcaption>
+        </figure>
+
+        <p>
+          The 32 panels are divided into four strings: West (9 panels), East (7 panels) and South
+          (2×8 panels). These strings connect to a <strong>Victron MPPT RS 450/200</strong> charge
+          controller, which converts the PV voltage to the <strong>48 V</strong> required by the
+          battery. In addition, <strong>Tigo TS4 optimisers</strong> were added to two out of the
+          four strings, to mitigate the power losses caused by chimney shading.
+        </p>
+
+        <!-- FOTO 1: después de Solar Plant Design -->
+        <figure class="project-hero">
+          <img src="assets/img/solar/roof.jpeg" alt="Panel Diagram">
+          <figcaption class="muted">
+            Diagram of the panel array in the rooftop
+          </figcaption>
+        </figure>
+
+        <h3>AC Conversion</h3>
+        <p>
+          A <strong>15 kVA Victron Multiplus II</strong> inverter was selected. The unit surpasses the
+          peak demanded power of the house, with some margin for future load growth. This inverter uses
+          an electromagnetic transformer, making it more robust compared to purely electronic models,
+          and more tolerant towards current peaks and unstable grids, which is ideal for this use case.
+          In addition, the Multiplus II equips an uninterrupted transfer system, which takes over the
+          power needs of the house during an outage with a <strong>20 ms</strong> transfer time,
+          ensuring appliances remain powered. It also allows reserving a fixed percentage of the battery
+          always charged in order to be ready for these events.
+        </p>
+
+        <!-- FOTO 2: después de AC Conversion -->
+        <figure class="project-hero">
+          <img src="assets/img/solar/diagram.png" alt="Wiring Diagram">
+          <figcaption class="muted">
+            AC & DC wiring diagram of the equipment
+          </figcaption>
+        </figure>
+
+        <h3>Battery Selection</h3>
+        <p>
+          The radiant heating system has a great buffering capacity; therefore, the cooling and
+          heating of the house can be scheduled during solar production hours. As a result, battery
+          sizing focuses on the consumption of non-HVAC loads. For the calculations, April was used
+          as an illustrative month, as neither cooling nor heating are required. The demand is around
+          <strong>1,000 kWh</strong>, which corresponds to an average of <strong>33.3 kWh per day</strong>.
+          Using a conservative assumption, it is estimated that two thirds of the consumption occur
+          when there is no solar production, which would require <strong>22.2 kWh</strong> of storage.
+        </p>
+        <p>
+          <strong>Six Pylontech US5000</strong> battery units were selected. This model is compatible
+          with Victron equipment and BMS protocols, and six units provide <strong>28.8 kWh</strong> of
+          storage, offering around 20% more capacity than needed to make up for future cell degradation.
+        </p>
+
+        <h2>Install</h2>
+        <p>
+          The installation phase included the complete physical integration of the PV array, inverter,
+          MPPT, battery modules and DC distribution system. All wiring, protection elements and
+          mechanical mounting were performed following manufacturer specifications and electrical
+          safety standards. This included rooftop mounting of the panels, routing of DC/AC cabling
+          to the basement with the corresponding electrical protections, assembly of the
+          <strong>48 V</strong> DC bus, and final commissioning of the system.
+        </p>
+
+        <!-- GALERÍA DE INSTALACIÓN: resto de fotos -->
+        <div class="section">
+        <h3>Installation Gallery</h3>
+        <div class="grid installation-gallery">
+            <figure>
+            <img src="assets/img/solar/solar1.jpeg"
+                alt="West Solar Panels"
+                class="zoomable">
+            <figcaption class="muted">Roof-mounted PV array across West slope</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/solar/solar2.jpeg"
+                alt="South Solar panels"
+                class="zoomable">
+            <figcaption class="muted">Roof-mounted PV array across South slope</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/solar/install.jpeg"
+                alt="Inverter and MPPT"
+                class="zoomable">
+            <figcaption class="muted">Inverter & MPPT connected to the 48 V DC bus</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/solar/batt.jpeg"
+                alt="Pylontech US5000 battery bank"
+                class="zoomable">
+            <figcaption class="muted">Pylontech US5000 battery bank connected to the 48 V DC bus</figcaption>
+            </figure>
+        </div>
+        </div>
+
+        <h2>Results</h2>
+        <p>
+          Two months after commissioning, the system has achieved near-100% demand coverage, in line
+          with the expected performance derived from the PVGIS modelling and consumption analysis.
+          The following graphs illustrate the production profile, daily load coverage and battery
+          utilisation during this period.
+        </p>
+
+        <!-- GRÁFICOS DE RESULTADOS (placeholders) -->
+        <div class="grid installation-gallery">
+            <figure>
+            <img src="assets/img/solar/sep.png"
+                alt="Monthly PV data September"
+                class="zoomable">
+            <figcaption class="muted">Monthly PV production during the month of September</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/solar/oct.png"
+                alt="Monthly PV data October"
+                class="zoomable">
+            <figcaption class="muted">Monthly PV production during the month of October</figcaption>
+            </figure>
+        </div>
+
+        <h2>What I Learned</h2>
+        <ul>
+          <li>
+            Coordinating PV, inverter, MPPT and battery design reinforced the need for a
+            <strong>system-level engineering approach</strong>.
+          </li>
+          <li>
+            Real installation constraints (cable routing, shading, voltage drop, thermal limits) had
+            major implications on design choices and equipment selection.
+          </li>
+          <li>
+            Working with high-current DC systems strengthened my understanding of protection design,
+            safety margins and fault behaviour in practical settings.
+          </li>
+        </ul>
+      </section>
+
+      <!-- ASIDE COLUMN -->
+      <aside>
+        <div class="panel">
+          <h3>Technologies</h3>
+          <ul class="tags vertical">
+            <li>JA Solar 530 W modules</li>
+            <li>Victron Multiplus II 15 kVA</li>
+            <li>Victron MPPT RS 450/200</li>
+            <li>Pylontech US5000 (LiFePO₄)</li>
+            <li>Tigo TS4 optimisers</li>
+            <li>PVGIS modelling</li>
+          </ul>
+        </div>
+
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Lucas Carrasco</p>
+    </div>
+  </footer>
+    <div id="lightbox-modal">
+        <img src="" alt="">
+    </div>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

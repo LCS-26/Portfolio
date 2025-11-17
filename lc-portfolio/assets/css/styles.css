@@ -1,0 +1,422 @@
+:root{
+  /* Paleta clara, seria, con acento azul */
+  --bg:#f5f5f7;        /* fondo principal */
+  --panel:#ffffff;     /* paneles / header / aside */
+  --card:#ffffff;      /* tarjetas */
+  --text:#1f2933;      /* texto principal (gris muy oscuro) */
+  --muted:#6b7280;     /* texto secundario */
+  --accent:#1d4ed8;    /* azul sobrio */
+  --accent-2:#1d4ed8;  /* mismo acento (sin degradados) */
+  --border:#e5e7eb;    /* bordes suaves */
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+
+body{
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 20px;
+}
+
+.section{padding:56px 0}
+
+.muted{color:var(--muted)}
+.accent{color:var(--accent)}
+
+img{
+  max-width:100%;
+  display:block;
+  border-radius:10px;
+}
+
+/* Botones */
+.btn{
+  display:inline-block;
+  padding:10px 18px;
+  border-radius:999px;
+  background:var(--accent);
+  color:#ffffff;
+  font-weight:600;
+  text-decoration:none;
+  font-size:0.95rem;
+}
+
+.btn.ghost{
+  background:transparent;
+  border:1px solid var(--accent);
+  color:var(--accent);
+}
+
+.grid{
+  display:grid;
+  gap:24px;
+}
+
+.grid.cards{
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+
+.grid.two{
+  grid-template-columns:1.4fr .8fr;
+}
+
+@media(max-width:900px){
+  .grid.two{grid-template-columns:1fr}
+}
+
+/* Header */
+.site-header{
+  position:sticky;
+  top:0;
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+  z-index:10;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 0;
+}
+
+.logo{
+  font-weight:700;
+  letter-spacing:0.04em;
+  font-size:0.95rem;
+  color:var(--text);
+  text-decoration:none;
+  border:1px solid var(--border);
+  padding:6px 10px;
+  border-radius:999px;
+  background:#ffffff;
+}
+
+.menu a{
+  color:var(--text);
+  text-decoration:none;
+  margin-left:16px;
+  font-size:0.95rem;
+}
+
+.menu a.active{
+  color:var(--accent);
+  font-weight:600;
+}
+
+.menu-toggle{
+  display:none;
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:0.9rem;
+}
+
+@media(max-width:720px){
+  .menu{
+    display:none;
+    position:absolute;
+    right:20px;
+    top:58px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    padding:12px;
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(15,23,42,0.1);
+  }
+  .menu a{
+    display:block;
+    margin:8px 0;
+  }
+  .menu.open{display:block}
+  .menu-toggle{display:block}
+}
+
+/* Hero layout tweaks */
+.hero-layout {
+  align-items: center;
+  gap: 32px;
+}
+
+.hero .lead {
+  max-width: 700px;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+/* Hero aside panel */
+.hero-aside {
+  margin-top: 16px;
+}
+
+.hero-subtitle {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.pill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.pill-list li {
+  background: #f3f4f6;
+  border-radius: 999px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.pill-list li span {
+  font-size: 1.1rem;
+}
+
+/* Selected projects list in home */
+.selected-projects {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.selected-projects article {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.selected-projects h3 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+}
+
+.selected-projects p {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+}
+
+/* Responsive: apilar hero en móvil */
+@media (max-width: 900px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cards de proyectos */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 14px rgba(15,23,42,0.04);
+}
+
+.card-body{
+  padding:16px 16px 18px;
+}
+
+.card h3{
+  margin:0 0 6px;
+  font-size:1rem;
+}
+
+.card h3 a{
+  color:var(--text);
+  text-decoration:none;
+}
+
+.card h3 a:hover{
+  color:var(--accent);
+}
+
+.card p{
+  font-size:0.95rem;
+  margin:0 0 8px;
+}
+
+.tags{
+  list-style:none;
+  padding:0;
+  margin:8px 0 0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.tags li{
+  font-size:0.75rem;
+  color:var(--muted);
+  background:#f3f4f6;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid #e5e7eb;
+}
+
+.tags.vertical{
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+/* Proyecto detalle */
+.project-hero{
+  margin:16px 0 24px;
+}
+
+.panel{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 16px;
+  margin-bottom:16px;
+}
+
+.breadcrumb{
+  display:inline-block;
+  margin-bottom:12px;
+  color:var(--muted);
+  text-decoration:none;
+  font-size:0.9rem;
+}
+
+.breadcrumb:hover{
+  color:var(--accent);
+}
+
+/* Footer */
+.site-footer{
+  border-top:1px solid var(--border);
+  padding:20px 0 24px;
+  margin-top:40px;
+  text-align:center;
+  font-size:0.85rem;
+  color:var(--muted);
+}
+
+.site-footer a{
+  color:var(--accent);
+  text-decoration:none;
+}
+
+/* Installation gallery – larger photos */
+.installation-gallery {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.installation-gallery img {
+  width: 100%;
+  border-radius: 12px;
+  cursor: zoom-in;
+  transition: transform 0.15s ease;
+}
+
+.installation-gallery img:hover {
+  transform: scale(1.02);
+}
+
+/* Lightbox modal */
+#lightbox-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+#lightbox-modal img {
+  max-width: 95%;
+  max-height: 90%;
+  border-radius: 12px;
+}
+
+#lightbox-modal.visible {
+  display: flex;
+}
+
+#lightbox-modal:after {
+  content: "✕";
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  font-size: 32px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Projects list – horizontal cards estilo "inmobiliaria premium" */
+.projects-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.projects-list .card {
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+
+.projects-list .card img {
+  width: 320px;             /* antes 220px */
+  height: 200px;            /* antes 140px */
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.projects-list .card-body {
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.projects-list .card h3 {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+}
+
+.projects-list .card p {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+}
+
+.projects-list .tags {
+  margin-top: 6px;
+}
+
+/* Móvil */
+@media (max-width: 720px) {
+  .projects-list .card {
+    flex-direction: column;
+  }
+
+  .projects-list .card img {
+    width: 100%;
+    height: 220px;
+  }
+}
