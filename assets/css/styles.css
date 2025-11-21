@@ -420,3 +420,22 @@ img{
     height: 220px;
   }
 }
+/* Mejorar márgenes en móvil */
+@media (max-width: 720px) {
+  .container {
+    padding: 0 16px;     /* antes probablemente 0 20px o menos consistente */
+  }
+
+  .section {
+    padding: 32px 0;     /* un poco menos alto para que no quede tan “largo” en móvil */
+  }
+
+  .hero.section {
+    padding: 40px 0;
+  }
+
+  /* Evitar que algún texto ancho se pegue demasiado */
+  .lead {
+    font-size: 0.95rem;
+  }
+}
