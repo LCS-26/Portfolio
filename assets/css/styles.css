@@ -420,22 +420,27 @@ img{
     height: 220px;
   }
 }
-/* Mejorar márgenes en móvil */
-@media (max-width: 720px) {
-  .container {
-    padding: 0 16px;     /* antes probablemente 0 20px o menos consistente */
+
+/* --- Mobile padding fix --- */
+@media (max-width: 768px) {
+
+  /* Asegura margen lateral en cualquier container */
+  .container,
+  main.container,
+  section.container,
+  .hero.container {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
-  .section {
-    padding: 32px 0;     /* un poco menos alto para que no quede tan “largo” en móvil */
+  /* Si usas .section sin .container dentro */
+  .section:not(.container) {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
-  .hero.section {
-    padding: 40px 0;
-  }
-
-  /* Evitar que algún texto ancho se pegue demasiado */
-  .lead {
-    font-size: 0.95rem;
+  /* Por si algún grid estira demasiado */
+  .grid {
+    gap: 16px;
   }
 }
