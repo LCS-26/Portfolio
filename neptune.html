@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEPTUNE – IPv6 Multihoming Architecture – Lucas Carrasco</title>
+  <meta name="description" content="NEPTUNE: IPv6 multihoming architecture for residential multi-ISP networks.">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html">LC</a>
+      <nav class="menu" id="menu">
+        <a href="projects.html">Projects</a>
+        <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:lucas@example.com">Contact</a>
+      </nav>
+      <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main class="container section">
+    <a class="breadcrumb" href="projects.html">← All projects</a>
+    <h1>NEPTUNE: IPv6 Multihoming Architecture for Residential Multi-ISP Networks</h1>
+    <p class="muted">2024 • IPv6, Multihoming, DHCPv6-PD, NPTv6, Protocol Design</p>
+
+    <!-- Imagen de cabecera (cámbiala por tu diagrama real) -->
+    <div class="project-hero">
+      <img src="assets/img/neptune-architecture.png" alt="High-level NEPTUNE IPv6 multihoming architecture diagram">
+    </div>
+
+    <div class="grid two">
+      <!-- COLUMNA PRINCIPAL -->
+      <section>
+        <h2>Summary</h2>
+        <p>
+          NEPTUNE is a protocol architecture designed to enable reliable, deterministic and fully compatible
+          <strong>IPv6 multihoming</strong> in residential and small-office networks using multiple ISPs simultaneously,
+          without requiring hardware changes or non-standard mechanisms.
+        </p>
+        <p>
+          Current IPv6 deployments still lack a practical solution for <strong>prefix stability</strong>,
+          <strong>multi-ISP coexistence</strong>, and <strong>seamless failover</strong>, often forcing users to depend
+          on IPv4, NAT, or hybrid transition mechanisms that compromise performance and reliability.
+        </p>
+        <p>
+          This project proposes a standards-aligned architecture that coordinates Prefix Delegation, stateless prefix
+          translation (NPTv6), router advertisement control, and ISP-health monitoring, enabling a stable internal
+          addressing plan independent of external ISP changes. The design is validated through software simulation
+          that models ISP revocation, failover, and real-world prefix instability scenarios.
+        </p>
+
+        <h2>Motivation</h2>
+        <p>
+          Despite widespread IPv6 deployment, real multihoming remains largely unsolved in residential networks:
+        </p>
+        <ul>
+          <li>ISPs delegate IPv6 prefixes dynamically, with no guarantee of stability.</li>
+          <li>Hosts configure global IPv6 addresses via SLAAC or DHCPv6, tightly coupling their identity to the ISP-assigned prefix.</li>
+          <li>Using two ISPs simultaneously yields multiple valid prefixes but <strong>no coordination mechanism</strong> between them.</li>
+          <li>When an ISP revokes or changes its prefix, the internal addressing structure becomes invalid, forcing renumbering.</li>
+          <li>Unlike IPv4, IPv6 typically avoids NAT, removing the “stable private address” layer that users rely on.</li>
+        </ul>
+        <p>
+          NEPTUNE was developed to bridge this gap by delivering:
+        </p>
+        <ul>
+          <li>Stable internal IPv6 addressing independent of ISP prefix volatility.</li>
+          <li>Multi-ISP coexistence without renumbering LAN devices.</li>
+          <li>Deterministic and controlled failover.</li>
+          <li>Compatibility with existing standards, hardware and ISP behaviour.</li>
+          <li>A transition path for networks using mixed IPv4/IPv6 mechanisms.</li>
+        </ul>
+
+        <h2>Requirements</h2>
+
+        <h3>Technical Requirements</h3>
+        <ul>
+          <li>Support for <strong>multiple ISPs</strong> with independent IPv6 Prefix Delegation (IA_PD).</li>
+          <li>Compatibility with <strong>dual-stack</strong> networks and mechanisms such as NAT44, DS-Lite, 464XLAT and MAP-E.</li>
+          <li>Ability to generate and maintain a <strong>stable internal prefix</strong> resilient to ISP prefix changes.</li>
+          <li>Deterministic, reversible <strong>stateless prefix translation</strong> (NPTv6) between internal and ISP prefixes.</li>
+          <li>Full compatibility with existing host mechanisms: SLAAC, Router Advertisements (RA), DHCPv6-PD.</li>
+          <li>No changes to packet formats or non-standard encapsulations.</li>
+        </ul>
+
+        <h3>Operational Requirements</h3>
+        <ul>
+          <li>Transparent failover when one ISP becomes unreachable or revokes its prefix.</li>
+          <li>No manual reconfiguration on client devices during ISP transitions.</li>
+          <li>Consistent addressing for always-on devices (servers, IoT, smart home systems).</li>
+          <li>Observability of prefix health, ISP status and translation behaviour.</li>
+        </ul>
+
+        <h3>Constraints</h3>
+        <ul>
+          <li>ISP prefix delegation is dynamic and cannot be controlled from the customer side.</li>
+          <li>Many residential ISPs do not offer static IPv6 prefixes.</li>
+          <li>Client devices are not designed to handle frequent renumbering or rapid prefix replacement.</li>
+          <li>No changes can be made to ISP networks; the solution must reside at the CPE / edge.</li>
+        </ul>
+
+        <h2>Design</h2>
+
+        <h3>Prefix Orchestrator</h3>
+        <p>
+          The <strong>Prefix Orchestrator</strong> manages all delegated IPv6 prefixes obtained from each ISP via
+          DHCPv6-PD. It maintains a live table with:
+        </p>
+        <ul>
+          <li>Currently active delegated prefixes per ISP.</li>
+          <li>Health state and reachability of each ISP.</li>
+          <li>Priority and selection metrics for each upstream.</li>
+          <li>History of prefix changes and revocations.</li>
+        </ul>
+        <p>
+          When an ISP changes or revokes its prefix, the orchestrator coordinates a controlled transition without
+          exposing instability to the LAN.
+        </p>
+
+        <h3>Internal Stable Prefix</h3>
+        <p>
+          NEPTUNE introduces a <strong>stable internal prefix</strong> that remains constant regardless of which ISP
+          is currently active or which prefix has been delegated. For example:
+        </p>
+        <pre><code>Internal prefix: fd00:1234:abcd::/48
+ISP prefix 1:   2a02:xxxx:xxxx::/56
+ISP prefix 2:   2a10:yyyy:yyyy::/56
+</code></pre>
+        <p>
+          LAN hosts only see and use the internal prefix. This avoids renumbering, improves device stability, and
+          provides a deterministic basis for failover and multi-ISP operation.
+        </p>
+
+        <h3>Stateless Prefix Translation (NPTv6)</h3>
+        <p>
+          Stateless prefix translation using <strong>NPTv6</strong> provides a checksum-neutral, reversible 1:1 mapping
+          between the internal prefix and each ISP prefix:
+        </p>
+        <pre><code>[Internal prefix]  &lt;--&gt;  [ISP prefix]
+</code></pre>
+        <p>
+          This translation:
+        </p>
+        <ul>
+          <li>Preserves host identifiers under each mapping.</li>
+          <li>Requires no per-flow state.</li>
+          <li>Automatically adapts to changing ISP prefixes.</li>
+          <li>Enables true IPv6 multihoming without introducing NAT66 semantics.</li>
+        </ul>
+        <p>
+          Each ISP is associated with its own NPTv6 translation instance, which can be enabled or disabled according
+          to ISP health.
+        </p>
+
+        <h3>Router Advertisement Control Plane</h3>
+        <p>
+          NEPTUNE centrally manages Router Advertisements to ensure:
+        </p>
+        <ul>
+          <li>LAN hosts always see the internal prefix as on-link and valid.</li>
+          <li>Default routes are advertised via virtual routers, decoupled from specific ISPs.</li>
+          <li>Failover is expressed as route metric changes, not as prefix replacement.</li>
+        </ul>
+        <p>
+          This avoids RA storms, abrupt deprecation of prefixes and other disruptive behaviours observed in naive
+          dual-ISP IPv6 setups.
+        </p>
+
+        <h3>Link-Health &amp; Decision Engine</h3>
+        <p>
+          The decision engine continuously monitors:
+        </p>
+        <ul>
+          <li>Reachability of each upstream (probe-based health checks).</li>
+          <li>DHCPv6-PD renew and rebind behaviour.</li>
+          <li>Prefix revocation or delegation failures.</li>
+          <li>Latency and packet loss per ISP.</li>
+        </ul>
+        <p>
+          Upon detecting an ISP failure, it:
+        </p>
+        <ul>
+          <li>Detaches the failed ISP from active routing and translation.</li>
+          <li>Adjusts route metrics to prefer healthy ISPs.</li>
+          <li>Activates only the corresponding NPTv6 translation instances.</li>
+          <li>Preserves the internal addressing model on the LAN.</li>
+        </ul>
+
+        <h2>Implementation</h2>
+        <p>
+          A software-based simulator was developed to validate NEPTUNE’s behaviour under realistic multi-ISP
+          conditions. The simulator models:
+        </p>
+        <ul>
+          <li>
+            A virtual router implementing DHCPv6-PD handling, NPTv6 translation and router advertisement control.
+          </li>
+          <li>Multiple ISPs with dynamic prefix delegation and revocation events.</li>
+          <li>Transient ISP failures, restorations and prefix changes.</li>
+          <li>Client devices obtaining addresses using SLAAC under the internal stable prefix.</li>
+        </ul>
+        <p>
+          Functional components implemented include:
+        </p>
+        <ul>
+          <li><strong>Prefix Delegation Processor</strong> for IA_PD lifecycle and timers.</li>
+          <li><strong>NPTv6 Translator</strong> for checksum-neutral, stateless prefix mapping.</li>
+          <li><strong>ISP Simulation Module</strong> to emulate real-world prefix churn and outages.</li>
+          <li><strong>RA Daemon</strong> to manage the internal prefix and default route advertisements.</li>
+          <li><strong>Failover Engine</strong> implementing the decision logic across ISPs.</li>
+        </ul>
+
+        <h2>Results</h2>
+        <p>
+          Simulation results show that NEPTUNE:
+        </p>
+        <ul>
+          <li>Maintains <strong>stable LAN addressing</strong> even under frequent ISP prefix changes.</li>
+          <li>
+            Achieves <strong>immediate failover</strong> when an ISP becomes unreachable or revokes its prefix,
+            without requiring client reconfiguration.
+          </li>
+          <li>
+            Ensures correct NPTv6 translation for all outbound flows during ISP transitions, maintaining consistency
+            and reachability.
+          </li>
+          <li>
+            Avoids any renumbering events on LAN devices during failover scenarios, preserving IPv6 identities.
+          </li>
+          <li>
+            Remains compatible with existing ISP behaviour, RFC-compliant DHCPv6-PD and NPTv6 implementations.
+          </li>
+        </ul>
+        <p>
+          The architecture scales naturally to more than two ISPs and can be deployed on commodity hardware
+          (for example, OpenWrt-based routers) with appropriate software support.
+        </p>
+
+        <h2>What I Learned</h2>
+        <ul>
+          <li>
+            Designing a multihoming architecture is fundamentally a <strong>control-plane problem</strong> that
+            requires coordinated behaviour across addressing, routing and failure detection.
+          </li>
+          <li>
+            IPv6 mechanisms such as SLAAC, RA and DHCPv6-PD introduce real-world constraints that are not obvious
+            from theoretical descriptions, especially in multi-ISP environments.
+          </li>
+          <li>
+            Stateless prefix mapping with NPTv6 is powerful, but must be integrated carefully to avoid routing loops,
+            asymmetric paths or policy conflicts.
+          </li>
+          <li>
+            Building a simulation environment was essential to validate the design, revealing edge cases that would be
+            hard to detect with purely analytical reasoning.
+          </li>
+          <li>
+            Providing IPv4-like stability (as offered by NAT) in IPv6 networks is still a key requirement for many
+            residential scenarios; NEPTUNE offers this stability while remaining fully standards-compliant.
+          </li>
+        </ul>
+      </section>
+
+      <!-- ASIDE -->
+      <aside>
+        <div class="panel">
+          <h3>Technologies</h3>
+          <ul class="tags vertical">
+            <li>IPv6</li>
+            <li>Multihoming</li>
+            <li>DHCPv6-PD</li>
+            <li>NPTv6</li>
+            <li>SLAAC &amp; RA</li>
+            <li>Control-plane design</li>
+            <li>Simulation</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <h3>Links</h3>
+          <ul>
+            <li><a href="assets/docs/TFG_NEPTUNE.pdf" target="_blank" rel="noopener">Full thesis (PDF)</a></li>
+            <!-- Añade más enlaces si quieres -->
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Lucas Carrasco</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
