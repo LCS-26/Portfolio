@@ -200,6 +200,114 @@
             unified framework to simplify traditionally complex configurations.
         </li>
         </ol>
+
+        <h2>Preliminary Proposal</h2>
+        <p>
+            NEPTUNE is a project currently under development. The following section provides
+            a brief description of how the protocol is intended to operate, in conjunction
+            with the architecture shown in the diagram below.
+        </p>
+
+        <!-- DIAGRAMA DEL PROTOCOLO -->
+        <figure class="project-hero">
+            <img src="assets/img/neptune/neptune.png" alt="NEPTUNE protocol architecture diagram">
+            <figcaption class="muted">Figure — High-level architecture of the NEPTUNE control and data planes.</figcaption>
+        </figure>
+
+        <p>
+            Network clients may have the following types of addresses in their network stacks,
+            listed in order of preference:
+        </p>
+
+        <ol>
+            <li>
+            <strong>IPv6 public</strong>: automatically configured via RA + SLAAC.
+            <ul>
+                <li>
+                If more than one ISP (and therefore more than one delegated prefix) is present,
+                only one prefix will be advertised internally. A 1:1 NPTv6 mapping table among
+                prefixes will be maintained by the Prefix Engine for inter-prefix translation.
+                </li>
+            </ul>
+            </li>
+
+            <li>
+            <strong>IPv4 public</strong>: statically assigned to selected hosts when an IPv4 BGP circuit exists.
+            </li>
+
+            <li>
+            <strong>IPv4 private</strong>: assigned statically or via DHCP when an IPv4 NATed circuit is present.
+            </li>
+
+            <li>
+            <strong>IPv6 private (ULA)</strong>: only generated when M:1 NATv6 is required.
+            <ul>
+                <li>
+                For example, a 5G modem used as a backup connection may only provide a single
+                IPv6 address via 464XLAT.
+                </li>
+            </ul>
+            </li>
+        </ol>
+
+        <p>
+            The <strong>DNS Engine</strong> will process DNS queries and generate synthetic responses whenever
+            translation is required. Latency and reliability metrics derived from these queries
+            will also feed the Load Balancer to influence circuit weighting and selection.
+        </p>
+
+        <p>
+            The <strong>NEPTUNE Virtual Interface</strong> acts as a sink for all outgoing LAN traffic.
+            The NEPTUNE Core then handles balancing, translation and encapsulation of flows based on:
+        </p>
+
+        <ul>
+            <li>The IP capabilities of the remote host (IPv4/IPv6).</li>
+            <li>The available circuits and their current health state.</li>
+            <li>The configuration and applied policies.</li>
+        </ul>
+
+        <h3>Main scenarios</h3>
+
+        <ul>
+            <li>
+            <strong>Host → IPv6-capable server (multi-flow)</strong>:  
+            Flows are distributed across all IPv6-capable circuits according to real-time link conditions.
+            Each flow remains pinned to its circuit to preserve return-path symmetry.
+            </li>
+
+            <li>
+            <strong>Host → IPv6-capable server (single-flow)</strong>:  
+            The Load Balancer selects the best circuit at connection setup.  
+            5-tuple stickiness can be disabled to allow spreading a single connection across circuits,
+            though it remains enabled by default to avoid breaking P2P-style services.
+            </li>
+
+            <li>
+            <strong>Host → IPv4-only server (multi-flow)</strong>:  
+            If the host has a static public IPv4 assigned via BGP, that circuit is prioritised.
+            Otherwise, load is split across all IPv4-capable circuits.
+            </li>
+
+            <li>
+            <strong>Host → IPv4-only server (single-flow)</strong>:  
+            If a static public IPv4 exists, it is used. Otherwise the Load Balancer selects
+            the best IPv4-capable circuit given current link conditions. Stickiness may be disabled if required.
+            </li>
+        </ul>
+
+        <p>
+            The <strong>translator/encapsulator modules</strong> perform the required transformations
+            (NPTv6, NAT44, NAT46/NAT64) and manage packet encapsulation and decapsulation.
+        </p>
+
+        <p>
+            All policies configured through the <strong>NEPTUNE CLI/GUI</strong> are stored and enforced
+            by the Policy Engine, which communicates directly with all core modules.  
+            The data plane and control plane are strictly separated.  
+            A dedicated <strong>Telemetry Module</strong> continuously logs circuit health, performance
+            metrics and relevant operational events to provide observability and aid debugging.
+        </p>
       </section>
 
       <!-- ASIDE -->
