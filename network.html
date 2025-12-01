@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hospitality Network Expansion – Lucas Carrasco</title>
+  <meta name="description" content="Design and deployment of a UniFi-based network expansion for a multi-unit hospitality building with WiFi 7 and 10G backbone.">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="index.html">LC</a>
+    <nav class="menu" id="menu">
+      <a href="projects.html">Projects</a>
+      <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:lucas@example.com">Contact</a>
+    </nav>
+    <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main class="container section">
+
+  <a class="breadcrumb" href="projects.html">← All projects</a>
+
+  <h1>Hospitality Network Expansion for Multi-Unit Building</h1>
+  <p class="muted">2023 • Enterprise WiFi, UniFi, Structured Cabling, Hospitality</p>
+
+  <div class="project-hero">
+    <!-- Opcional: esquema de la red / planta del edificio -->
+    <img src="assets/img/hospitality-overview.png" alt="Network layout for multi-unit hospitality building">
+  </div>
+
+  <div class="grid two">
+    <section>
+
+      <h2>Summary</h2>
+      <p>
+        This project documents the design and deployment of a network expansion carried out during an internship
+        at a real estate company that extended its business model from traditional property sales into short-term
+        rentals.
+      </p>
+      <p>
+        The network architecture and implementation were designed and executed by me as part of the infrastructure
+        upgrade required for this expansion. The existing office network was based on an ISP router and an unmanaged
+        switch, with no segmentation, no central management and limited room for growth.
+      </p>
+      <p>
+        Following the acquisition of an entire residential building to host six independent rental units plus the
+        office itself, the network had to be redesigned to support a mixed-use environment. The new design is based
+        on a UniFi Dream Machine Pro, UniFi Enterprise 24 PoE and UniFi Pro Max 24 PoE switches, 10 Gbps SFP+ uplinks
+        between racks, structured Cat 6 cabling and a full WiFi 7 deployment using UniFi U7 Pro and U7 Outdoor
+        access points.
+      </p>
+
+      <h2>Motivation</h2>
+      <p>
+        The company transitioned from operating a single office to managing multiple short-term rental units in the
+        same building. This change introduced requirements that the original ad-hoc office network could not meet:
+      </p>
+      <ul>
+        <li>Independent and reliable connectivity for each apartment.</li>
+        <li>Clear separation between office systems and guest traffic.</li>
+        <li>Consistent WiFi coverage across all units and common areas.</li>
+        <li>Capacity for future services such as IP cameras and additional IoT devices.</li>
+      </ul>
+      <p>
+        At the starting point, the network consisted of an ISP-provided WiFi router and an unmanaged switch feeding
+        a set of data lines to office workstations. The goal of the project was to replace this with a structured,
+        manageable and scalable network comparable to a small enterprise or hospitality deployment.
+      </p>
+
+      <h2>Requirements</h2>
+
+      <h3>Technical Requirements</h3>
+      <ul>
+        <li>Centralised routing, firewalling and management.</li>
+        <li>Managed PoE switching for access points and future IP devices.</li>
+        <li>Logical separation between office, guest and management networks.</li>
+        <li>High-performance WiFi with coverage in all apartments, the office and the courtyard.</li>
+        <li>10 Gbps uplinks between network cabinets to avoid backbone bottlenecks.</li>
+        <li>Structured cabling that anticipates future services without additional civil works.</li>
+      </ul>
+
+      <h3>Operational Requirements</h3>
+      <ul>
+        <li>Minimal disruption to ongoing office activity during migration.</li>
+        <li>Simple operation for non-technical staff via a central management interface.</li>
+        <li>Stable connectivity for guests, even under high occupancy.</li>
+        <li>Clean and maintainable installation in line with the building’s commercial use.</li>
+      </ul>
+
+      <h2>Design</h2>
+
+      <p>
+        The entire network architecture, physical layout and technology selection were defined from scratch as part
+        of this project, based on the business requirements and the physical characteristics of the building.
+      </p>
+
+      <h3>Building Layout</h3>
+      <p>
+        The building consists of a ground floor and two upper floors:
+      </p>
+      <ul>
+        <li>Ground floor: real estate office, two additional commercial units and a shared courtyard.</li>
+        <li>First floor: two independent apartments.</li>
+        <li>Second floor: two independent apartments.</li>
+      </ul>
+      <p>
+        Two main network locations were defined:
+      </p>
+      <ul>
+        <li><strong>Main rack (office):</strong> edge routing, firewall and office distribution.</li>
+        <li><strong>Secondary rack (residential):</strong> distribution to all apartment terminations.</li>
+      </ul>
+
+      <h3>Core Network Infrastructure</h3>
+      <p>
+        The core of the new network is built around UniFi hardware:
+      </p>
+      <ul>
+        <li>
+          <strong>UniFi Dream Machine Pro (UDM Pro):</strong> edge gateway providing routing, firewalling,
+          VPN and UniFi controller services.
+        </li>
+        <li>
+          <strong>UniFi Enterprise 24 PoE:</strong> main office switch supplying PoE to office access points
+          and wired endpoints.
+        </li>
+        <li>
+          <strong>UniFi Pro Max 24 PoE:</strong> distribution switch for the residential units, installed in
+          a separate cabinet closer to the apartments.
+        </li>
+      </ul>
+      <p>
+        The two racks are connected using <strong>10 Gbps SFP+</strong> uplinks, ensuring that the backbone does
+        not become a bottleneck as the number of clients and services grows.
+      </p>
+
+      <h3>Structured Cabling</h3>
+      <p>
+        A new Cat 6 structured cabling system was installed to support:
+      </p>
+      <ul>
+        <li>2.5 GbE uplinks to each UniFi U7 Pro access point.</li>
+        <li>Dedicated Ethernet runs to each apartment for routers and smart TVs.</li>
+        <li>Additional Ethernet runs per apartment to allow flexibility for future devices.</li>
+        <li>Cabling to potential IP camera locations in common areas such as stairwells and the courtyard.</li>
+      </ul>
+      <p>
+        Extra cabling was also installed:
+      </p>
+      <ul>
+        <li>Between racks, to allow additional uplinks or redundancy in the future.</li>
+        <li>From the main rack to the rooftop, in case a backup satellite or 5G link is deployed later.</li>
+      </ul>
+      <p>
+        This approach avoids the need to reopen walls or conduits if the business decides to add services later on.
+      </p>
+
+      <h3>Wireless Deployment &amp; RF Planning</h3>
+      <p>
+        The existing WiFi was replaced with a WiFi 7 deployment based on:
+      </p>
+      <ul>
+        <li><strong>UniFi U7 Pro:</strong> tri-band WiFi 7 access points (2.4 / 5 / 6 GHz).</li>
+        <li><strong>UniFi U7 Outdoor:</strong> WiFi 7 access point for the courtyard and outdoor areas.</li>
+      </ul>
+      <p>
+        A total of <strong>8 access points</strong> were installed:
+      </p>
+      <ul>
+        <li>One UniFi U7 Pro per apartment (four units).</li>
+        <li>One UniFi U7 Pro for the office.</li>
+        <li>Additional U7 Pro units to reinforce coverage where needed.</li>
+        <li>One UniFi U7 Outdoor for the courtyard.</li>
+      </ul>
+      <p>
+        Channel planning was performed to maximise separation between equal channels and reduce co-channel
+        interference. The 2.4 GHz, 5 GHz and 6 GHz bands were used in a coordinated way, prioritising
+        consistency and stability over theoretical peak throughput.
+      </p>
+
+      <h3>Logical Segmentation</h3>
+      <p>
+        Traffic is logically segmented into multiple VLAN-backed networks, including:
+      </p>
+      <ul>
+        <li>Office LAN for business systems and staff devices.</li>
+        <li>Guest networks for each apartment or group of apartments.</li>
+        <li>Management network for infrastructure devices.</li>
+        <li>IoT and cameras network for future services.</li>
+      </ul>
+      <p>
+        This segmentation provides isolation between office and guests, limits the blast radius of potential
+        issues and simplifies troubleshooting.
+      </p>
+
+      <h2>Implementation</h2>
+      <p>
+        Implementation was carried out by me following the defined architecture, starting with the deployment
+        of the core routing and switching infrastructure in the office rack and continuing with the installation
+        of the residential distribution switch.
+      </p>
+      <p>
+        Once the core was in place, structured cabling was terminated and tested across all apartments and common
+        areas. Access points were installed and adopted into the UniFi controller, and their placement and transmit
+        power were fine-tuned based on on-site measurements.
+      </p>
+      <p>
+        Network segmentation was implemented using VLANs and corresponding SSIDs for guest and office networks.
+        The final cutover from the legacy ISP router to the UDM Pro was performed in a controlled window to
+        minimise disruption to day-to-day office operations.
+      </p>
+
+      <h2>Results</h2>
+      <p>
+        The new infrastructure provides:
+      </p>
+      <ul>
+        <li>Stable, high-performance connectivity for office staff.</li>
+        <li>Reliable WiFi coverage in all apartments and in the courtyard.</li>
+        <li>Clear separation between business and guest traffic.</li>
+        <li>Centralised management and monitoring through the UniFi interface.</li>
+      </ul>
+      <p>
+        The installation also lays the groundwork for future services such as IP cameras, additional IoT devices
+        or a backup WAN link, without the need for further structural changes.
+      </p>
+
+      <h2>What I Learned</h2>
+      <ul>
+        <li>Enterprise-style networking is as much about planning and future-proofing as it is about raw bandwidth.</li>
+        <li>Logical segmentation, cabling and RF planning have to be designed together to produce a coherent system.</li>
+        <li>Careful channel planning becomes critical once multiple access points share the same building.</li>
+        <li>Investing in spare cabling and clear rack organisation dramatically simplifies later expansions.</li>
+        <li>Working in a real commercial environment highlighted the importance of minimising downtime and making the network manageable for non-technical users.</li>
+      </ul>
+
+    </section>
+
+    <aside>
+      <div class="panel">
+        <h3>Technologies</h3>
+        <ul class="tags vertical">
+          <li>UniFi Dream Machine Pro</li>
+          <li>UniFi Enterprise 24 PoE</li>
+          <li>UniFi Pro Max 24 PoE</li>
+          <li>UniFi U7 Pro / U7 Outdoor</li>
+          <li>WiFi 7 (2.4 / 5 / 6 GHz)</li>
+          <li>10G SFP+ Uplinks</li>
+          <li>Cat 6 Structured Cabling</li>
+          <li>VLAN Segmentation</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>Links</h3>
+        <ul>
+          <li><a href="#" target="_blank">Building network diagram</a></li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> Lucas Carrasco</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+
+</body>
+</html>

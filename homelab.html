@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Homelab Infrastructure Platform – Lucas Carrasco</title>
+  <meta name="description" content="Homelab infrastructure platform built with Proxmox VE, Nextcloud and Proxmox Backup Server with off-site backup architecture.">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="index.html">LC</a>
+    <nav class="menu" id="menu">
+      <a href="projects.html">Projects</a>
+      <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:lucas@example.com">Contact</a>
+    </nav>
+    <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main class="container section">
+
+  <a class="breadcrumb" href="projects.html">← All projects</a>
+
+  <h1>Homelab Infrastructure Platform for Self-Hosted Services & Remote Backups</h1>
+  <p class="muted">2021 • Virtualization, Storage, Backup Architecture, Self-Hosting</p>
+
+  <div class="project-hero">
+    <!-- OPCIONAL: imagen general de la infraestructura -->
+    <img src="assets/img/homelab-overview.png" alt="Homelab infrastructure overview diagram">
+  </div>
+
+  <div class="grid two">
+    <section>
+
+      <h2>Summary</h2>
+      <p>
+        This project documents the design and deployment of a personal infrastructure platform built on top of a
+        Dell PowerEdge R730 running Proxmox VE, used to host self-hosted services and provide a realistic environment
+        for systems and network engineering.
+      </p>
+      <p>
+        The platform is structured as a two-site deployment: a primary virtualization host for production workloads,
+        and a secondary remote server dedicated to off-site backups via Proxmox Backup Server. A self-hosted
+        Nextcloud instance is used as a representative workload and is deployed using a multi-VM architecture,
+        including a dedicated reverse proxy and DNS service.
+      </p>
+
+      <h2>Motivation</h2>
+      <p>
+        This homelab was designed to move beyond theoretical practice and cloud-only experimentation, towards a real
+        infrastructure platform that behaves like a small-scale production environment.
+      </p>
+      <p>
+        The aim was not simply to run virtual machines, but to operate an infrastructure capable of hosting real
+        services, supporting backup strategies, surviving failures and evolving over time. The addition of a
+        second, remote backup server was driven by the need to avoid single points of failure and to treat data
+        integrity as a first-class design requirement.
+      </p>
+
+      <h2>Requirements</h2>
+      <h3>Technical Requirements</h3>
+      <ul>
+        <li>Support for multiple concurrent virtual machines with sufficient performance headroom.</li>
+        <li>Separate performance-oriented and capacity-oriented storage tiers.</li>
+        <li>Local and off-site backup capabilities.</li>
+        <li>Out-of-band management on all physical servers.</li>
+        <li>Clear separation of roles between services.</li>
+      </ul>
+
+      <h3>Operational Requirements</h3>
+      <ul>
+        <li>Ease of maintenance by a single operator.</li>
+        <li>Incremental and space-efficient backups.</li>
+        <li>Reliable recovery of critical services.</li>
+        <li>Predictable use of physical resources.</li>
+      </ul>
+
+      <h2>Design</h2>
+
+      <h3>Operational Principles</h3>
+      <p>
+        The infrastructure was designed using the same principles as small production environments:
+        fault isolation, reproducibility, minimisation of blast radius, and avoidance of single points of failure
+        where reasonably possible.
+      </p>
+
+      <h3>Physical Infrastructure</h3>
+      <p><strong>Primary site – Dell PowerEdge R730</strong></p>
+      <ul>
+        <li>Intel Xeon E5-2690 v4</li>
+        <li>384 GB RAM</li>
+        <li>3 × 400 GB SLC SSD (performance tier)</li>
+        <li>3 × 12 TB HDD (capacity tier)</li>
+      </ul>
+
+      <p><strong>Secondary site – DIY backup server</strong></p>
+      <ul>
+        <li>Intel Xeon E3-1240 v3</li>
+        <li>32 GB RAM</li>
+        <li>2 × 120 GB SSD</li>
+        <li>3 × 4 TB HDD</li>
+      </ul>
+
+      <p>
+        Both machines provide hardware-level remote management:
+      </p>
+      <ul>
+        <li><strong>Dell R730:</strong> iDRAC</li>
+        <li><strong>DIY server:</strong> IPMI</li>
+      </ul>
+      <p>
+        These out-of-band management interfaces allow full remote control of each server, including power
+        cycling, virtual media mounting, BIOS and boot configuration, and console access even when the
+        operating system is not reachable. In practice, this makes it possible to perform maintenance,
+        recover from failed updates or test failure scenarios without physical access to the machines.
+      </p>
+
+      <h3>Virtualization &amp; Service Design</h3>
+      <p>
+        Proxmox VE is used as the virtualization layer on the primary server. To avoid monolithic designs and improve
+        maintainability, services are split into multiple independent VMs.
+      </p>
+
+      <p>Example deployment: <strong>Nextcloud stack</strong></p>
+      <ul>
+        <li><strong>Nextcloud VM:</strong> application and data services.</li>
+        <li><strong>NGINX VM:</strong> TLS termination and reverse proxy.</li>
+        <li><strong>AdGuard Home VM:</strong> DNS sinkhole and internal resolution.</li>
+      </ul>
+
+      <h3>Storage Architecture</h3>
+      <p>
+        All storage pools are built on top of <strong>ZFS</strong>, using <strong>RAIDZ</strong> for redundancy
+        and data integrity. ZFS provides end-to-end checksums, self-healing on read and efficient snapshots,
+        which are used heavily for backup and rollback.
+      </p>
+
+      <p>
+        On the primary server, the layout is:
+      </p>
+      <ul>
+        <li>
+          <strong>SSD pool (ZFS RAIDZ):</strong> used for VM system disks and performance-critical workloads
+          such as the Nextcloud application and database.
+        </li>
+        <li>
+          <strong>HDD pool (ZFS RAIDZ):</strong> used for bulk data, including Nextcloud user files and the
+          local Proxmox Backup Server datastore for short-term backups.
+        </li>
+      </ul>
+
+      <p>
+        On the backup server, ZFS RAIDZ is also used over the HDDs to store the remote
+        <strong>Proxmox Backup Server</strong> datastores, providing redundancy even at the off-site location.
+      </p>
+
+      <h3>Backup Strategy</h3>
+      <p>
+        The backup system follows a dual-layer approach, combining fast local restores with true off-site protection.
+        In both cases, Proxmox Backup Server operates on top of ZFS and uses incremental, deduplicated backups
+        based on VM snapshots.
+      </p>
+
+      <ol>
+        <li>
+          <strong>Local backups on the Dell R730:</strong><br>
+          A Proxmox Backup Server VM runs on the primary host and performs nightly incremental backups of the
+          most important virtual machines. These backups are stored on the local ZFS HDD pool and are intended
+          as a high-speed safety net to roll back configuration errors, failed updates or accidental changes.
+        </li>
+        <li>
+          <strong>Remote backups on the DIY server:</strong><br>
+          A second Proxmox Backup Server instance runs on the remote machine and receives nightly incremental
+          backups over the network. These backups are focused on protecting against hardware failures of the
+          primary server or incidents affecting the main site, and store data for critical services such as
+          Nextcloud and supporting components.
+        </li>
+      </ol>
+
+      <p>
+        Backups are scheduled to run every night, using incremental VM-level snapshots. This keeps backup
+        windows predictable and allows restoring entire virtual machines or individual disks when needed.
+        Retention policies are applied to balance disk usage and recovery capability, keeping recent backups
+        with higher granularity and older ones in a more compact form.
+      </p>
+
+      <h2>Implementation</h2>
+      <p>
+        Proxmox VE was installed and configured on both machines, with storage pools and networking defined prior
+        to deploying any service.
+      </p>
+      <p>
+        The Nextcloud deployment was built incrementally, starting from the core application VM and expanding to a
+        full stack with reverse proxy and DNS services. Once the system reached stability, Proxmox Backup Server was
+        deployed locally and then remotely, with nightly incremental backup jobs configured for the key VMs based on
+        ZFS-backed snapshots.
+      </p>
+
+      <h2>Results</h2>
+      <p>
+        The platform provides a stable environment for daily self-hosted services while also acting as an
+        experimentation and learning platform. Off-site backups guarantee recovery from hardware and site-level
+        failures, and service separation allows controlled upgrades and debugging. The infrastructure was
+        intentionally designed to be extensible: additional Proxmox nodes or external storage can be added in
+        the future without requiring major architectural changes.
+      </p>
+      <p>
+        This homelab also serves as the execution environment for other projects in this portfolio, including
+        network experiments, service deployments and protocol testing.
+      </p>
+
+      <h2>What I Learned</h2>
+      <ul>
+        <li>Infrastructure must be designed as a system, not as isolated machines.</li>
+        <li>Service separation across VMs improves reliability, observability and maintainability.</li>
+        <li>Off-site backups are a requirement once real data is involved; local redundancy is not enough.</li>
+        <li>Out-of-band management (iDRAC/IPMI) changes the way failures are handled, enabling recovery even when the OS is completely unavailable.</li>
+        <li>ZFS with RAIDZ and snapshots provides a strong foundation for both data integrity and fast rollback after configuration mistakes.</li>
+        <li>Operating this platform day-to-day revealed practical failure modes and operational details that are not visible in purely theoretical environments.</li>
+      </ul>
+
+    </section>
+
+    <aside>
+      <div class="panel">
+        <h3>Technologies</h3>
+        <ul class="tags vertical">
+          <li>Proxmox VE</li>
+          <li>Proxmox Backup Server</li>
+          <li>Nextcloud</li>
+          <li>NGINX</li>
+          <li>AdGuard Home</li>
+          <li>ZFS / RAIDZ</li>
+          <li>iDRAC / IPMI</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>Links</h3>
+        <ul>
+          <li><a href="#" target="_blank">Architecture diagram</a></li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> Lucas Carrasco</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Point-to-Point Wireless Backhaul – Lucas Carrasco</title>
+  <meta name="description" content="Point-to-point wireless backhaul using Ubiquiti airMAX ac and an EdgeRouter X to extend fibre connectivity to locations without broadband coverage.">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="index.html">LC</a>
+    <nav class="menu" id="menu">
+      <a href="projects.html">Projects</a>
+      <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:lucas@example.com">Contact</a>
+    </nav>
+    <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main class="container section">
+
+  <a class="breadcrumb" href="projects.html">← All projects</a>
+
+  <h1>Point-to-Point Wireless Backhaul for Rural Broadband</h1>
+  <p class="muted">2020–2021 • Wireless Links, Routing, Rural Connectivity, Ubiquiti airMAX</p>
+
+  <div class="project-hero">
+    <!-- Imagen general del enlace / topología -->
+    <img src="assets/img/ptp-overview.png" alt="Point-to-point wireless backhaul topology diagram">
+  </div>
+
+  <div class="grid two">
+    <section>
+
+      <h2>Summary</h2>
+      <p>
+        This project documents the design and deployment of a point-to-point wireless backhaul network built
+        after the primary home connectivity was found to be inadequate for daily use during the COVID-19 pandemic.
+      </p>
+      <p>
+        The initial objective was to replace an unstable ADSL connection at my own home with a fibre-based link
+        from a nearby location with available coverage. After validating the design in real operation, the same
+        architecture was extended to two additional point-to-point links serving other nearby locations with
+        similar infrastructure limitations.
+      </p>
+      <p>
+        The system is based on Ubiquiti airMAX ac radios and integrates RF planning, physical installation and
+        IP-layer design. Routing, traffic separation and upstream access are handled by a Ubiquiti EdgeRouter X
+        at the fibre-connected site.
+      </p>
+
+      <h2>Motivation</h2>
+      <p>
+        When all academic activity moved online during the COVID-19 pandemic, connectivity limitations at my home
+        became immediately critical. The existing ADSL line offered insufficient upstream capacity, high latency
+        and frequent instability, making real-time communication unreliable for online classes and collaborative work.
+      </p>
+      <p>
+        Once fibre connectivity was located at a nearby site, the engineering objective became the design of a
+        wireless backhaul link capable of delivering stable, fibre-grade performance to a home that did not itself
+        have fibre availability.
+      </p>
+      <p>
+        After the first deployment proved reliable in daily operation, the same backbone design was extended to
+        serve other nearby locations experiencing similar access constraints.
+      </p>
+
+      <h2>Requirements</h2>
+
+      <h3>Technical Requirements</h3>
+      <ul>
+        <li>
+          <strong>Throughput:</strong> enough to support multiple simultaneous video calls, cloud document editing
+          and general web access at each remote site.
+        </li>
+        <li>
+          <strong>Latency and jitter:</strong> significantly better than the ADSL link, suitable for real-time audio
+          and video.
+        </li>
+        <li>
+          <strong>Reliability:</strong> stable operation over time and resilience to typical weather conditions.
+        </li>
+        <li>
+          <strong>Integration:</strong> clean Layer-2/Layer-3 integration with existing home routers, without requiring
+          complex configuration on client devices.
+        </li>
+        <li>
+          <strong>Extensibility:</strong> ability to add additional links using the same overall architecture.
+        </li>
+      </ul>
+
+      <h3>Operational Requirements</h3>
+      <ul>
+        <li>Use of cost-effective hardware without compromising stability.</li>
+        <li>Remote management and monitoring of radios and routing equipment.</li>
+        <li>Operation within legal spectrum and EIRP limits.</li>
+        <li>Non-intrusive installation on existing structures (rooftops, masts).</li>
+      </ul>
+
+      <h2>Design</h2>
+
+      <h3>Topology &amp; Network Architecture</h3>
+      <p>
+        The architecture is built around a single fibre-connected site acting as the upstream gateway. From this
+        location, point-to-point wireless links connect several remote homes using dedicated radios. Each link
+        behaves as a Layer-2 bridge, allowing the remote networks to integrate cleanly with the central router
+        while remaining logically independent.
+      </p>
+      <p>
+        A <strong>Ubiquiti EdgeRouter X</strong> is deployed at the fibre-connected site to:
+      </p>
+      <ul>
+        <li>Terminate the fibre connection.</li>
+        <li>Perform routing and NAT.</li>
+        <li>Provide network separation between sites.</li>
+        <li>Apply basic firewalling and traffic prioritisation.</li>
+      </ul>
+      <p>
+        Each remote site maintains its own local router behind the wireless bridge, preserving autonomy while
+        relying on the headend for upstream routing and policy enforcement.
+      </p>
+
+      <h3>Radio Technology</h3>
+      <p>
+        The backhaul is implemented with <strong>Ubiquiti airMAX ac</strong> radios, selected for:
+      </p>
+      <ul>
+        <li>Directional point-to-point performance with good link budgets.</li>
+        <li>Stable modulation under varying environmental conditions.</li>
+        <li>Mature management tools and a strong price/performance ratio.</li>
+      </ul>
+      <p>
+        All links were designed with clear line-of-sight as a prerequisite, with antennas mounted high enough
+        on rooftops or masts to minimise Fresnel zone obstruction within the constraints of each site.
+      </p>
+
+      <h3>Link Planning</h3>
+      <p>
+        Prior to deployment, basic RF and path planning was performed:
+      </p>
+      <ul>
+        <li>Approximate distances and elevation profiles were used to verify feasibility and line-of-sight.</li>
+        <li>Channel and channel-width settings were chosen conservatively to prioritise stability over peak rate.</li>
+        <li>Frequency planning considered coexistence between links to reduce self-interference.</li>
+      </ul>
+
+      <h2>Implementation</h2>
+      <p>
+        The implementation started with a single point-to-point link between the fibre-connected site and the
+        primary home. A pair of airMAX ac radios were installed, aligned and configured in bridge mode, with the
+        EdgeRouter X handling routing, NAT and basic QoS.
+      </p>
+      <p>
+        Once the first link had proven stable in daily use, the same pattern was replicated for two additional
+        homes, each with its own dedicated point-to-point link back to the same upstream site. Frequency and
+        power settings were adjusted to avoid interference between links and to maintain clean, stable signals.
+      </p>
+      <p>
+        Over time, link quality and utilisation were monitored using the Ubiquiti management interface, making
+        it possible to fine-tune parameters such as channel width, transmit power and modulation policies based
+        on actual performance rather than theoretical values.
+      </p>
+
+      <h2>Results</h2>
+      <p>
+        The wireless backhaul successfully replaced the original ADSL connection as the primary access method at
+        the affected locations:
+      </p>
+      <ul>
+        <li>Latency and jitter were reduced to levels comparable to wired broadband.</li>
+        <li>Available throughput increased significantly, enabling stable video conferencing.</li>
+        <li>Cloud-based tools, software updates and streaming became usable without saturating the link.</li>
+      </ul>
+      <p>
+        The modular architecture made it possible to expand from a single link to multiple sites without a full
+        redesign. The system has remained in continuous operation, requiring only minor adjustments and occasional
+        alignment checks.
+      </p>
+
+      <h2>What I Learned</h2>
+      <ul>
+        <li>
+          End-to-end connectivity is shaped as much by RF conditions and installation details as by IP configuration.
+        </li>
+        <li>
+          Designing for stability often means trading theoretical peak throughput for predictable, reproducible
+          performance.
+        </li>
+        <li>
+          A central routing point simplifies management but requires careful consideration of its impact on
+          overall availability.
+        </li>
+        <li>
+          Integrating the backhaul with consumer-grade routers highlighted the value of making infrastructure
+          effectively transparent for end users.
+        </li>
+        <li>
+          This project provided first-hand experience in designing and operating a system that people depend on
+          every day, rather than a purely experimental lab setup.
+        </li>
+      </ul>
+
+    </section>
+
+    <aside>
+      <div class="panel">
+        <h3>Technologies</h3>
+        <ul class="tags vertical">
+          <li>Ubiquiti airMAX ac</li>
+          <li>Ubiquiti EdgeRouter X</li>
+          <li>Layer-2 Bridging</li>
+          <li>NAT &amp; Routing</li>
+          <li>QoS / Traffic Shaping</li>
+          <li>Rural Connectivity</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>Links</h3>
+        <ul>
+          <li><a href="#" target="_blank">Backhaul topology diagram</a></li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> Lucas Carrasco</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+
+</body>
+</html>
