@@ -806,3 +806,27 @@ body {
   position: static !important;  /* desactiva sticky/fixed venga de donde venga */
   top: auto !important;
 }
+
+/* ============================
+   Fix header + hero overlap on mobile
+   ============================ */
+
+/* Desktop: header puede seguir sticky si quieres */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+/* MÓVIL: desactivamos sticky para que no tape nada */
+@media (max-width: 768px) {
+  .site-header{
+    position: relative !important;  /* asegura que entra en el flujo normal */
+    top: auto !important;
+  }
+
+  /* Un poco de aire entre el hero y el statement */
+  .statement-section{
+    padding-top: 24px;
+  }
+}
