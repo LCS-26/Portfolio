@@ -800,3 +800,9 @@ body {
     padding-top: 72px;  /* ajusta este valor según lo alto que sea el header */
   }
 }
+
+/* Fix: header no se superpone al contenido en móvil */
+.site-header{
+  position: static !important;  /* desactiva sticky/fixed venga de donde venga */
+  top: auto !important;
+}
