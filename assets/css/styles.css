@@ -184,17 +184,18 @@ h1,h2,h3{
 
 .hero-visual-inner {
   position: relative;
-  max-height: 420px;
   overflow: hidden;
+  /* IMPORTANTE: SIN max-height aquí */
 }
 
-/* Foto de fondo */
+/* Foto de fondo: ocupa todo el contenedor y no condiciona la altura */
 .hero-visual-inner img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  max-height: 420px;
   object-fit: cover;
-  object-position: center top; /* prioriza parte superior (frontal servidor) */
+  object-position: center top; /* parte superior del servidor */
   display: block;
 }
 
@@ -211,18 +212,16 @@ h1,h2,h3{
   );
 }
 
-/* Contenido (texto) encima de la foto */
+/* Contenido (texto) encima de la foto.
+   AHORA es el que manda en la altura del hero. */
 .hero-visual-content {
-  position: absolute;
-  inset: 0;
+  position: relative;          /* ya no absolute */
   display: flex;
   align-items: center;
+  padding: 80px 0 96px;        /* da altura al hero */
 }
 
-.hero-text-wrapper{
-  width:100%;
-}
-
+/* Texto dentro del hero */
 .hero-text {
   max-width: 540px;
   color: #e5e7eb;
@@ -253,7 +252,7 @@ h1,h2,h3{
   color: #e5e7eb;
 }
 
-/* Chips debajo del texto */
+/* Chips debajo del hero */
 .hero-meta {
   margin-top: 18px;
   display: flex;
@@ -281,30 +280,9 @@ h1,h2,h3{
 /* ===== RESPONSIVE HERO ===== */
 
 @media (max-width: 900px) {
-  .hero-visual-inner {
-    max-height: 380px;
-  }
-
-  .hero-visual-inner img {
-    max-height: 380px;
-  }
-
-  .hero-visual-overlay {
-    background: linear-gradient(
-      180deg,
-      rgba(15,23,42,0.85) 0%,
-      rgba(15,23,42,0.85) 40%,
-      rgba(15,23,42,0.45) 100%
-    );
-  }
-
   .hero-visual-content {
+    padding: 64px 0 72px;
     align-items: flex-end;
-    padding-bottom: 28px;
-  }
-
-  .hero-text {
-    max-width: 100%;
   }
 
   .hero-text h1 {
@@ -321,21 +299,16 @@ h1,h2,h3{
 }
 
 @media (max-width: 640px) {
-  .hero-visual-inner {
-    max-height: 360px;
-  }
-
-  .hero-visual-inner img {
-    max-height: 360px;
-    object-position: center top;
-  }
-
   .hero-visual-content {
-    padding-bottom: 22px;
+    padding: 56px 0 64px;
   }
 
   .hero-text h1 {
     font-size: 1.8rem;
+  }
+
+  .hero-text .lead {
+    font-size: 0.93rem;
   }
 }
 
