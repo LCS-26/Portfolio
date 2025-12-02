@@ -153,24 +153,45 @@ h1,h2,h3{
   font-size:0.9rem;
 }
 
-@media(max-width:720px){
-  .menu{
-    display:none;
-    position:absolute;
-    right:20px;
-    top:58px;
-    background:var(--panel);
-    border:1px solid var(--border);
-    padding:12px;
-    border-radius:12px;
-    box-shadow:0 8px 20px rgba(15,23,42,0.1);
+@media (max-width: 720px) {
+  .menu {
+    display: none;
+    position: absolute;
+    right: 16px;
+    top: 64px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    border-radius: 20px;
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.18);
+    min-width: 210px;          /* más ancho */
+    z-index: 50;
   }
-  .menu a{
-    display:block;
-    margin:8px 0;
+
+  .menu a {
+    display: block;
+    margin: 0;
+    padding: 10px 0;           /* más alto cada item */
+    font-size: 1rem;           /* texto un poco mayor */
   }
-  .menu.open{display:block}
-  .menu-toggle{display:block}
+
+  .menu a + a {
+    border-top: 1px solid rgba(229, 231, 235, 0.8);
+    margin-top: 8px;
+  }
+
+  .menu.open {
+    display: block;
+  }
+
+  .menu-toggle {
+    display: block;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 10px;
+    font-size: 1.1rem;         /* icono un poquito más grande */
+  }
 }
 
 /* ============================
