@@ -13,106 +13,191 @@
   <meta property="og:type" content="website">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav">
-      <a class="logo" href="index.html">LC</a>
-      <nav class="menu" id="menu">
-        <a href="projects.html">Projects</a>
-        <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
-        <a href="mailto:lucas@example.com">Contact</a>
-      </nav>
-      <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
-    </div>
-  </header>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero section">
-      <div class="container grid two hero-layout">
-        <!-- Columna izquierda: texto principal -->
-        <div>
-          <h1>Hi, I’m <span class="accent">Lucas Carrasco</span></h1>
-          <p class="lead">
-            Telecommunications Engineering student (ICAI) focused on
-            <strong>network systems</strong>, <strong>distributed infrastructures</strong>,
-            and <strong>energy integration</strong>. This portfolio documents independent
-            engineering projects I’ve designed and built.
-          </p>
-          <div class="actions">
-            <a class="btn" href="projects.html">View projects</a>
-            <a class="btn ghost" href="assets/CV_LucasCarrasco.pdf" target="_blank" rel="noopener">
-              Download CV
-            </a>
-          </div>
-        </div>
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="index.html">LC</a>
+    <nav class="menu" id="menu">
+      <a href="#projects">Projects</a>
+      <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:lucas@example.com">Contact</a>
+    </nav>
+    <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
+  </div>
+</header>
 
-        <!-- Columna derecha: "CV snapshot" -->
-        <aside class="panel hero-aside">
-          <h2 class="hero-subtitle">At a glance</h2>
-          <ul class="pill-list">
-            <li><span>🎓</span>Telecommunications Engineering (ICAI – Comillas)</li>
-            <li><span>🛰️</span>Networks &amp; distributed systems</li>
-            <li><span>🛠️</span>Hands-on projects: homelab, IPv6 Multihoming, 17 kWp solar ESS</li>
-            <li><span>🌍</span>Based in Madrid, Spain</li>
-          </ul>
-        </aside>
-      </div>
-    </section>
+<main>
 
-    <!-- SELECTED PROJECTS -->
-    <section class="section">
-      <div class="container">
-        <h2>Selected projects</h2>
-        <p class="muted">
-          A few representative projects. You can find more details in the full projects section.
+  <!-- HERO -->
+  <section class="hero section">
+    <div class="container grid two hero-layout">
+
+      <!-- Columna izquierda: texto principal -->
+      <div>
+        <p class="eyebrow">Building real systems, not just lab exercises.</p>
+        <h1>Hi, I’m <span class="accent">Lucas Carrasco</span></h1>
+        <p class="lead">
+          Telecommunications Engineering student (ICAI) focused on
+          <strong>network systems</strong>, <strong>distributed infrastructures</strong>,
+          and <strong>energy integration</strong>. I enjoy taking ideas from
+          theoretical coursework into <strong>production-like deployments</strong>.
         </p>
-
-        <div class="selected-projects">
-          <article>
-            <h3><a href="solar.html">17 kWp Residential Solar With Battery &amp; Backup</a></h3>
-            <p class="muted">Energy systems • PV design • Victron ESS • Storage</p>
-            <p>
-              Design and deployment of a residential-scale PV + storage system with 17 kWp solar,
-              a 15 kVA inverter and 28.8 kWh LiFePO₄, including PVGIS modelling, string layout,
-              protection design and commissioning.
-            </p>
-          </article>
-
-          <article>
-            <h3><a href="neptune.html">NEPTUNE IPv6 Multihoming Protocol Stack</a></h3>
-            <p class="muted">IP Networks • Telecommunications • Dissertation</p>
-            <p>
-              Design and simultation of a multihoming protocol for IPv6 and IPv4-IPv6 mixed environments,
-              oriented towards small to medium size businesses with multiple Internet circuits with
-              load balancing and failover setups.
-            </p>
-          </article>
-
-          <!-- Puedes añadir más artículos aquí si quieres -->
-          <!--
-          <article>
-            <h3><a href="saas.html">Technical Tools SaaS Platform</a></h3>
-            <p class="muted">Web • Spring Boot • React</p>
-            <p>
-              Early-stage SaaS for technical calculation tools with multi-tenant architecture and React frontend.
-            </p>
-          </article>
-          -->
-        </div>
-
-        <div class="actions" style="margin-top: 24px;">
-          <a class="btn ghost" href="projects.html">View all projects</a>
+        <div class="actions">
+          <a class="btn" href="#projects">View projects</a>
+          <a class="btn ghost" href="assets/CV_LucasCarrasco.pdf" target="_blank" rel="noopener">
+            Download CV
+          </a>
         </div>
       </div>
-    </section>
-  </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>© <span id="year"></span> Lucas Carrasco • <a href="projects.html">Projects</a></p>
+      <!-- Columna derecha: “CV snapshot” + banner -->
+      <aside class="panel hero-aside">
+        <figure class="hero-banner">
+          <img src="assets/img/hero-banner.jpg" alt="Rack, network gear and solar installation">
+        </figure>
+
+        <h2 class="hero-subtitle">Profile snapshot</h2>
+        <ul class="pill-list pill-list-columns">
+          <li>
+            <span>🎓</span>
+            <div>
+              <strong>Education</strong><br>
+              BEng in Telecommunications Engineering (ICAI – Comillas)
+            </div>
+          </li>
+          <li>
+            <span>📡</span>
+            <div>
+              <strong>Focus areas</strong><br>
+              Networks, distributed systems, energy integration
+            </div>
+          </li>
+          <li>
+            <span>🛠️</span>
+            <div>
+              <strong>Key projects</strong><br>
+              IPv6 multihoming (TFG), 17 kWp solar ESS, homelab platform
+            </div>
+          </li>
+          <li>
+            <span>🧰</span>
+            <div>
+              <strong>Tools</strong><br>
+              Proxmox, UniFi, Victron, Java/Spring, Python
+            </div>
+          </li>
+          <li>
+            <span>🌍</span>
+            <div>
+              <strong>Location</strong><br>
+              Madrid, Spain
+            </div>
+          </li>
+        </ul>
+      </aside>
+
     </div>
-  </footer>
+  </section>
 
-  <script src="assets/js/main.js" defer></script>
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="container">
+
+      <h2>Projects</h2>
+      <p class="muted">
+        Independent engineering projects with focus on networks, distributed systems, and energy integration.
+      </p>
+
+      <div class="projects-list">
+
+        <!-- SOLAR (imagen izquierda) -->
+        <article class="project-card">
+          <img src="assets/img/solar/install.jpeg" alt="17 kWp Residential Solar With Battery & Backup">
+
+          <div class="project-content">
+            <h3><a href="solar.html">17 kWp Residential Solar With Battery &amp; Backup</a></h3>
+            <p>2025 • Energy systems, PV design, Victron ESS, Storage</p>
+            <div class="project-tags">
+              <span>PV design</span>
+              <span>Energy systems</span>
+              <span>Storage</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- NEPTUNE (imagen derecha) -->
+        <article class="project-card reverse">
+          <img src="assets/img/neptune/neptune.png" alt="NEPTUNE Protocol Stack">
+
+          <div class="project-content">
+            <h3><a href="neptune.html">NEPTUNE IPv6 Multihoming Protocol Stack</a></h3>
+            <p>2025 • Communication systems, protocol design, dissertation</p>
+            <div class="project-tags">
+              <span>IPv6</span>
+              <span>Multihoming</span>
+              <span>Protocol</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- HOMELAB (imagen izquierda) -->
+        <article class="project-card">
+          <img src="assets/img/homelab-overview.png" alt="Homelab Infrastructure">
+
+          <div class="project-content">
+            <h3><a href="homelab.html">Homelab Infrastructure Platform</a></h3>
+            <p>2021–ongoing • Virtualization, ZFS, backups</p>
+            <div class="project-tags">
+              <span>Proxmox</span>
+              <span>ZFS</span>
+              <span>Backups</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- P2P (imagen derecha) -->
+        <article class="project-card reverse">
+          <img src="assets/img/ptp-overview.png" alt="Point-to-point links">
+
+          <div class="project-content">
+            <h3><a href="ptp-backhaul.html">Point-to-point Wireless Backhaul</a></h3>
+            <p>2020–2021 • RF planning, routing, connectivity</p>
+            <div class="project-tags">
+              <span>airMAX</span>
+              <span>EdgeRouter</span>
+              <span>RF links</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- HOSPITALITY (imagen izquierda) -->
+        <article class="project-card">
+          <img src="assets/img/hospitality-overview.png" alt="Hospitality network">
+
+          <div class="project-content">
+            <h3><a href="hospitality-network.html">Hospitality Network Expansion</a></h3>
+            <p>2023 • WiFi 7, UniFi, structured cabling</p>
+            <div class="project-tags">
+              <span>UniFi</span>
+              <span>WiFi 7</span>
+              <span>VLANs</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> Lucas Carrasco • <a href="#projects">Projects</a></p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+
 </body>
 </html>
