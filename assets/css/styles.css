@@ -794,3 +794,9 @@ body {
     padding: 10px 0;
   }
 }
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 72px;  /* ajusta este valor según lo alto que sea el header */
+  }
+}
