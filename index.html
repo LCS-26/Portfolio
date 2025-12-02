@@ -28,76 +28,59 @@
 
 <main>
 
-  <!-- HERO -->
-  <section class="hero section">
-    <div class="container grid two hero-layout">
+  <!-- HERO VISUAL FULL-WIDTH -->
+  <section class="hero-visual">
+    <div class="hero-visual-inner">
+      <img src="assets/img/network/dell.jpeg"
+           alt="Rack with servers, network gear and solar equipment">
+      <div class="hero-visual-overlay"></div>
 
-      <!-- Columna izquierda: texto principal -->
-      <div>
-        <p class="eyebrow">Building real systems, not just lab exercises.</p>
-        <h1>Hi, I’m <span class="accent">Lucas Carrasco</span></h1>
-        <p class="lead">
-          Telecommunications Engineering student (ICAI) focused on
-          <strong>network systems</strong>, <strong>distributed infrastructures</strong>,
-          and <strong>energy integration</strong>. I enjoy taking ideas from
-          theoretical coursework into <strong>production-like deployments</strong>.
-        </p>
-        <div class="actions">
-          <a class="btn" href="#projects">View projects</a>
-          <a class="btn ghost" href="assets/CV_LucasCarrasco.pdf" target="_blank" rel="noopener">
-            Download CV
-          </a>
+      <div class="hero-visual-content container">
+        <div class="hero-text">
+          <p class="eyebrow">Engineering beyond the theory.</p>
+          <h1>Hi, I’m <span class="accent">Lucas Carrasco</span></h1>
+            <p class="lead">
+              Telecommunications Engineering student at <strong>ICAI (Comillas)</strong> with hands-on experience in
+              <strong>network engineering</strong>, <strong>infrastructure design</strong> and
+              <strong>energy systems integration</strong>.
+            </p>
+          <div class="actions">
+            <a class="btn" href="#projects">View projects</a>
+            <a class="btn ghost" href="assets/CV_LucasCarrasco.pdf" target="_blank" rel="noopener">
+              Download CV
+            </a>
+          </div>
+
+          <div class="hero-meta">
+            <span>Systems Engineering</span>
+            <span>Network Architecture</span>
+            <span>Energy Systems</span>
+          </div>
         </div>
       </div>
-
-      <!-- Columna derecha: “CV snapshot” + banner -->
-      <aside class="panel hero-aside">
-        <figure class="hero-banner">
-          <img src="assets/img/hero-banner.jpg" alt="Rack, network gear and solar installation">
-        </figure>
-
-        <h2 class="hero-subtitle">Profile snapshot</h2>
-        <ul class="pill-list pill-list-columns">
-          <li>
-            <span>🎓</span>
-            <div>
-              <strong>Education</strong><br>
-              BEng in Telecommunications Engineering (ICAI – Comillas)
-            </div>
-          </li>
-          <li>
-            <span>📡</span>
-            <div>
-              <strong>Focus areas</strong><br>
-              Networks, distributed systems, energy integration
-            </div>
-          </li>
-          <li>
-            <span>🛠️</span>
-            <div>
-              <strong>Key projects</strong><br>
-              IPv6 multihoming (TFG), 17 kWp solar ESS, homelab platform
-            </div>
-          </li>
-          <li>
-            <span>🧰</span>
-            <div>
-              <strong>Tools</strong><br>
-              Proxmox, UniFi, Victron, Java/Spring, Python
-            </div>
-          </li>
-          <li>
-            <span>🌍</span>
-            <div>
-              <strong>Location</strong><br>
-              Madrid, Spain
-            </div>
-          </li>
-        </ul>
-      </aside>
-
     </div>
   </section>
+
+<!-- ENGINEERING STATEMENT -->
+<section class="section statement-section">
+  <div class="container">
+    <h2>Engineering statement</h2>
+    <p>
+      I approach engineering as a systems discipline: understanding how network, compute and energy
+      layers interact rather than treating them as separate pieces. Most of my work has grown out of
+      real constraints — unreliable connectivity, limited infrastructure, or unstable power — and has
+      evolved into production-like deployments that must keep running outside the lab.
+    </p>
+    <p>
+      This portfolio brings together three main threads: network architectures (IPv6 multihoming,
+      point-to-point backhaul links), infrastructure platforms (virtualization, storage and backup
+      design with Proxmox and ZFS), and energy systems (a 17 kWp PV + storage system with backup
+      capabilities). I am particularly interested in reliability engineering and long-term
+      maintainability, where protocol design, hardware choices and operational practices all need
+      to align.
+    </p>
+  </div>
+</section>
 
   <!-- PROJECTS -->
   <section id="projects" class="section">
@@ -110,23 +93,8 @@
 
       <div class="projects-list">
 
-        <!-- SOLAR (imagen izquierda) -->
+        <!-- NEPTUNE (imagen izquierda) -->
         <article class="project-card">
-          <img src="assets/img/solar/install.jpeg" alt="17 kWp Residential Solar With Battery & Backup">
-
-          <div class="project-content">
-            <h3><a href="solar.html">17 kWp Residential Solar With Battery &amp; Backup</a></h3>
-            <p>2025 • Energy systems, PV design, Victron ESS, Storage</p>
-            <div class="project-tags">
-              <span>PV design</span>
-              <span>Energy systems</span>
-              <span>Storage</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- NEPTUNE (imagen derecha) -->
-        <article class="project-card reverse">
           <img src="assets/img/neptune/neptune.png" alt="NEPTUNE Protocol Stack">
 
           <div class="project-content">
@@ -140,32 +108,17 @@
           </div>
         </article>
 
-        <!-- HOMELAB (imagen izquierda) -->
-        <article class="project-card">
-          <img src="assets/img/homelab-overview.png" alt="Homelab Infrastructure">
-
-          <div class="project-content">
-            <h3><a href="homelab.html">Homelab Infrastructure Platform</a></h3>
-            <p>2021–ongoing • Virtualization, ZFS, backups</p>
-            <div class="project-tags">
-              <span>Proxmox</span>
-              <span>ZFS</span>
-              <span>Backups</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- P2P (imagen derecha) -->
+        <!-- SOLAR (imagen derecha) -->
         <article class="project-card reverse">
-          <img src="assets/img/ptp-overview.png" alt="Point-to-point links">
+          <img src="assets/img/solar/install.jpeg" alt="17 kWp Residential Solar With Battery & Backup">
 
           <div class="project-content">
-            <h3><a href="ptp-backhaul.html">Point-to-point Wireless Backhaul</a></h3>
-            <p>2020–2021 • RF planning, routing, connectivity</p>
+            <h3><a href="solar.html">17 kWp Residential Solar With Battery &amp; Backup</a></h3>
+            <p>2025 • Energy systems, PV design, Victron ESS, Storage</p>
             <div class="project-tags">
-              <span>airMAX</span>
-              <span>EdgeRouter</span>
-              <span>RF links</span>
+              <span>PV design</span>
+              <span>Energy systems</span>
+              <span>Storage</span>
             </div>
           </div>
         </article>
@@ -181,6 +134,36 @@
               <span>UniFi</span>
               <span>WiFi 7</span>
               <span>VLANs</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- HOMELAB (imagen derecha) -->
+        <article class="project-card reverse">
+          <img src="assets/img/homelab-overview.png" alt="Homelab Infrastructure">
+
+          <div class="project-content">
+            <h3><a href="homelab.html">Homelab Infrastructure Platform</a></h3>
+            <p>2021–ongoing • Virtualization, ZFS, backups</p>
+            <div class="project-tags">
+              <span>Proxmox</span>
+              <span>ZFS</span>
+              <span>Backups</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- P2P (imagen izquierda) -->
+        <article class="project-card">
+          <img src="assets/img/ptp-overview.png" alt="Point-to-point links">
+
+          <div class="project-content">
+            <h3><a href="ptp-backhaul.html">Point-to-point Wireless Backhaul</a></h3>
+            <p>2020–2021 • RF planning, routing, connectivity</p>
+            <div class="project-tags">
+              <span>airMAX</span>
+              <span>EdgeRouter</span>
+              <span>RF links</span>
             </div>
           </div>
         </article>

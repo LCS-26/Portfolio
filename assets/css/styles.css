@@ -535,8 +535,9 @@ h1,h2,h3{
 .project-card img {
   width: 480px;          /* ancho fijo de la imagen */
   max-width: 480px;      /* evita que crezca */
-  height: 300px;         /* misma altura siempre */
+  height: 275px;         /* misma altura siempre */
   object-fit: cover;     /* recorte natural */
+  object-position: top center;   /* muestra la parte superior */
   flex-shrink: 0;        /* NO permitir que se deforme */
   border-radius: 14px;
 }
@@ -576,4 +577,207 @@ h1,h2,h3{
 
 body {
   overflow-x: hidden;
+}
+
+/* Snapshot cards: layout más cómodo en pantallas pequeñas */
+@media (max-width: 720px) {
+  .pill-list-columns {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  .pill-list-columns li {
+    width: 100%;
+    border-radius: 16px;
+  }
+}
+
+.pill-list li {
+  padding: 10px 12px;
+}
+
+/* ===== HERO FULL-WIDTH IMAGE ===== */
+
+.hero-visual {
+  width: 100%;
+  background: #0b1120;
+}
+
+.hero-visual-inner {
+  position: relative;
+  max-height: 420px;
+  overflow: hidden;
+}
+
+/* Foto de fondo */
+.hero-visual-inner img {
+  width: 100%;
+  height: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  object-position: center top; /* coge la parte superior del servidor */
+  display: block;
+}
+
+/* Capa oscura encima de la foto */
+.hero-visual-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 15% 20%, rgba(15,23,42,0.9) 0, rgba(15,23,42,0.75) 40%, rgba(15,23,42,0.35) 70%, rgba(15,23,42,0.05) 100%);
+}
+
+/* Contenido (texto) encima de la foto */
+.hero-visual-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none; /* que los clicks pasen a los botones dentro */
+}
+
+.hero-text {
+  max-width: 540px;
+  color: #e5e7eb;
+  pointer-events: auto; /* pero sí se puede clicar en botones */
+}
+
+.hero-text h1 {
+  margin: 8px 0 10px;
+  font-size: 2.3rem;
+}
+
+.hero-text .lead {
+  font-size: 0.98rem;
+  max-width: 540px;
+  margin: 0 0 18px;
+}
+
+.hero-text .accent {
+  color: #60a5fa;
+}
+
+.hero-text .btn {
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+}
+
+.hero-text .btn.ghost {
+  background: transparent;
+  border-color: #93c5fd;
+  color: #e5e7eb;
+}
+
+/* Chips debajo del hero */
+.hero-meta {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.8rem;
+}
+
+.hero-meta span {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.7);
+}
+
+/* Eyebrow en el hero */
+.eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(193, 206, 224, 0.9);
+  margin-bottom: 6px;
+}
+
+/* ===== RESPONSIVE HERO ===== */
+
+@media (max-width: 900px) {
+  .hero-visual-inner {
+    max-height: 380px;
+  }
+
+  .hero-visual-inner img {
+    max-height: 380px;
+  }
+
+  .hero-visual-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(15,23,42,0.85) 0%,
+      rgba(15,23,42,0.85) 40%,
+      rgba(15,23,42,0.45) 100%
+    );
+  }
+
+  .hero-visual-content {
+    align-items: flex-end;
+    padding-bottom: 28px;
+  }
+
+  .hero-text {
+    max-width: 100%;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text .lead {
+    font-size: 0.95rem;
+  }
+
+  .hero-meta {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-visual-inner {
+    max-height: 360px;
+  }
+
+  .hero-visual-inner img {
+    max-height: 360px;
+    object-position: center top; /* arriba también en móvil */
+  }
+
+  .hero-visual-content {
+    padding-bottom: 22px;
+  }
+
+  .hero-text h1 {
+    font-size: 1.8rem;
+  }
+}
+
+/* ===== ENGINEERING STATEMENT ===== */
+
+.statement-section {
+  padding-top: 36px;
+  padding-bottom: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.statement-body {
+  max-width: 760px;
+}
+
+.statement-section h2 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;       /* mismo tamaño que Projects */
+}
+
+.statement-section p {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .statement-body {
+    max-width: none;
+  }
 }
