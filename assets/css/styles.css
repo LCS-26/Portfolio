@@ -552,3 +552,28 @@ h1,h2,h3{
 .project-card.reverse {
   flex-direction: row-reverse;   /* ESTO ES LO QUE TE FALTABA */
 }
+
+/* ----- Mobile fix for project cards ----- */
+@media (max-width: 768px) {
+
+  .projects-list {
+    gap: 20px;
+  }
+
+  .project-card,
+  .project-card.reverse {
+    flex-direction: column;     /* imagen arriba, texto debajo */
+    padding: 14px 14px 16px;
+  }
+
+  .project-card img {
+    width: 100%;                /* ocupa todo el ancho disponible */
+    max-width: 100%;            /* no puede ser más ancha que la tarjeta */
+    height: auto;               /* mantenemos proporción, sin forzar 200px */
+    border-radius: 14px;
+  }
+}
+
+body {
+  overflow-x: hidden;
+}
