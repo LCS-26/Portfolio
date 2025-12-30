@@ -664,9 +664,45 @@ h1,h2,h3{
    Mobile container padding
    ============================ */
 
+  .container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 16px;   /* ← base, SIEMPRE */
+}
+
 @media(max-width:768px){
   .container{
     padding-left:16px;
     padding-right:16px;
   }
+}
+
+/* ============================
+   FINAL FIX: global gutters
+   (pegar al FINAL del CSS)
+   ============================ */
+
+:root { --gutter: 16px; }
+
+@media (min-width: 480px)  { :root { --gutter: 18px; } }
+@media (min-width: 768px)  { :root { --gutter: 24px; } }  /* iPad portrait */
+@media (min-width: 1024px) { :root { --gutter: 28px; } }
+
+.container{
+  padding-left: var(--gutter) !important;
+  padding-right: var(--gutter) !important;
+}
+
+/* Por si hay <main class="container ..."> o secciones raras */
+main.container,
+section.container,
+header .container{
+  padding-left: var(--gutter) !important;
+  padding-right: var(--gutter) !important;
+}
+
+/* Evita que algo "100vw" te coma el padding en horizontal */
+html, body{
+  overflow-x: hidden;
 }
