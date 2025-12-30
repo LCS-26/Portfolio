@@ -32,12 +32,6 @@ body{
 
 /* Layout helpers */
 
-.container{
-  max-width:1100px;
-  margin:0 auto;
-  padding:0 20px;
-}
-
 .container {
   width: 100%;
   max-width: 1200px;
