@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Curriculum Vitae – Lucas Carrasco</title>
+  <meta name="description" content="Curriculum Vitae of Lucas Carrasco">
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <style>
+    .cv-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .cv-preview{
+      background:#fff;
+      border-radius:16px;
+      padding:16px;
+      box-shadow:0 20px 40px rgba(0,0,0,.08);
+    }
+
+    .cv-preview img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:8px;
+    }
+
+    .cv-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="index.html">LC</a>
+    <nav class="menu" id="menu">
+      <a href="index.html#projects">Projects</a>
+      <a href="about.html" aria-current="page">About</a>
+      <a href="cv.html">CV</a>
+      <a href="mailto:carrascodominguezlucas@gmail.com">Contact</a>
+    </nav>
+    <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main class="container section">
+
+  <div class="cv-header">
+    <div>
+      <h1 style="margin:0;">Curriculum Vitae</h1>
+    </div>
+
+    <div class="cv-actions">
+      <a class="btn" href="assets/docs/Lucas Carrasco CV.pdf" target="_blank">
+        Open PDF
+      </a>
+      <a class="btn ghost" href="assets/docs/Lucas Carrasco CV.pdf" download>
+        Download PDF
+      </a>
+    </div>
+  </div>
+
+  <div class="cv-preview">
+    <img
+      src="assets/docs/Lucas Carrasco CV.png"
+      alt="Curriculum Vitae – Lucas Carrasco">
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> Lucas Carrasco</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

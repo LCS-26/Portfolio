@@ -13,9 +13,10 @@
   <div class="container nav">
     <a class="logo" href="index.html">LC</a>
     <nav class="menu" id="menu">
-      <a href="projects.html">Projects</a>
-      <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
-      <a href="mailto:lucas@example.com">Contact</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="about.html" aria-current="page">About</a>
+      <a href="cv.html">CV</a>
+      <a href="mailto:carrascodominguezlucas@gmail.com">Contact</a>
     </nav>
     <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
   </div>
@@ -23,18 +24,19 @@
 
 <main class="container section">
 
-  <a class="breadcrumb" href="projects.html">← All projects</a>
+  <a class="breadcrumb" href="index.html">← All projects</a>
 
-  <h1>Hospitality Network Expansion for Multi-Unit Building</h1>
-  <p class="muted">2023 • Enterprise WiFi, UniFi, Structured Cabling, Hospitality</p>
-
-  <div class="project-hero">
-    <!-- Opcional: esquema de la red / planta del edificio -->
-    <img src="assets/img/hospitality-overview.png" alt="Network layout for multi-unit hospitality building">
-  </div>
+  <h1>Network Expansion for Multi-Unit Building</h1>
+  <p class="muted">2024 • Enterprise WiFi, UniFi, Structured Cabling, Hospitality</p>
 
   <div class="grid two">
     <section>
+
+      <!-- Portada del edificio -->
+      <div class="project-hero">
+        <img src="assets/img/network/Building.jpg"
+            alt="Front view of the hospitality building used for the network expansion">
+      </div>
 
       <h2>Summary</h2>
       <p>
@@ -50,9 +52,8 @@
       <p>
         Following the acquisition of an entire residential building to host six independent rental units plus the
         office itself, the network had to be redesigned to support a mixed-use environment. The new design is based
-        on a UniFi Dream Machine Pro, UniFi Enterprise 24 PoE and UniFi Pro Max 24 PoE switches, 10 Gbps SFP+ uplinks
-        between racks, structured Cat 6 cabling and a full WiFi 7 deployment using UniFi U7 Pro and U7 Outdoor
-        access points.
+        on Ubiquiti's UniFi lineup, a Software-Defined LAN architecture that ensures performance, scalability and 
+        maintainability, while being cost-effective and subscription-free.
       </p>
 
       <h2>Motivation</h2>
@@ -80,7 +81,7 @@
         <li>Managed PoE switching for access points and future IP devices.</li>
         <li>Logical separation between office, guest and management networks.</li>
         <li>High-performance WiFi with coverage in all apartments, the office and the courtyard.</li>
-        <li>10 Gbps uplinks between network cabinets to avoid backbone bottlenecks.</li>
+        <li>10 Gbps uplinks between network cabinets to avoid bottlenecks.</li>
         <li>Structured cabling that anticipates future services without additional civil works.</li>
       </ul>
 
@@ -104,7 +105,7 @@
         The building consists of a ground floor and two upper floors:
       </p>
       <ul>
-        <li>Ground floor: real estate office, two additional commercial units and a shared courtyard.</li>
+        <li>Ground floor: real estate office, two additional apartment units and a shared courtyard.</li>
         <li>First floor: two independent apartments.</li>
         <li>Second floor: two independent apartments.</li>
       </ul>
@@ -135,9 +136,17 @@
         </li>
       </ul>
       <p>
-        The two racks are connected using <strong>10 Gbps SFP+</strong> uplinks, ensuring that the backbone does
-        not become a bottleneck as the number of clients and services grows.
+        The two racks are connected using a <strong>10 Gbps SFP+</strong> uplink, ensuring that the backbone does
+        not become a bottleneck as the number of clients and services grows. A second link, disabled by Spanning
+        Tree Protocol, is in place in the event of a failure from the main link.
       </p>
+
+      <figure>
+      <img src="assets/img/network/Diagram.png"
+          alt="Structured cabling and network topology for the building"
+          class="zoomable">
+      <figcaption class="muted">Structured cabling and network topology for the building</figcaption>
+      </figure>
 
       <h3>Structured Cabling</h3>
       <p>
@@ -145,7 +154,7 @@
       </p>
       <ul>
         <li>2.5 GbE uplinks to each UniFi U7 Pro access point.</li>
-        <li>Dedicated Ethernet runs to each apartment for routers and smart TVs.</li>
+        <li>Dedicated Ethernet runs to each apartment for smart TVs.</li>
         <li>Additional Ethernet runs per apartment to allow flexibility for future devices.</li>
         <li>Cabling to potential IP camera locations in common areas such as stairwells and the courtyard.</li>
       </ul>
@@ -166,17 +175,45 @@
       </p>
       <ul>
         <li><strong>UniFi U7 Pro:</strong> tri-band WiFi 7 access points (2.4 / 5 / 6 GHz).</li>
-        <li><strong>UniFi U7 Outdoor:</strong> WiFi 7 access point for the courtyard and outdoor areas.</li>
+        <li><strong>UniFi U7 Outdoor:</strong> WiFi 7 access point for the courtyard.</li>
       </ul>
       <p>
         A total of <strong>8 access points</strong> were installed:
       </p>
       <ul>
-        <li>One UniFi U7 Pro per apartment (four units).</li>
+        <li>One UniFi U7 Pro per apartment (six units).</li>
         <li>One UniFi U7 Pro for the office.</li>
-        <li>Additional U7 Pro units to reinforce coverage where needed.</li>
         <li>One UniFi U7 Outdoor for the courtyard.</li>
       </ul>
+
+      <!-- PLANIFICACIÓN de RED -->
+      <div class="section">
+      <div class="installation-gallery">
+
+          <figure>
+          <img src="assets/img/network/Floor1.png"
+              alt="First floor RF planning for the two apartments"
+              class="zoomable">
+          <figcaption class="muted">First floor RF planning for the two apartments</figcaption>
+          </figure>
+
+          <figure>
+          <img src="assets/img/network/Floor2.png"
+              alt="Second floor RF planning for the top apartments"
+              class="zoomable">
+          <figcaption class="muted">Second floor RF planning for the top apartments</figcaption>
+          </figure>
+
+          <figure>
+          <img src="assets/img/network/Floor0.png"
+              alt="Ground floor RF planning (office, commercial units and courtyard)"
+              class="zoomable">
+          <figcaption class="muted">Ground floor RF planning (office, commercial units and courtyard)</figcaption>
+          </figure>
+
+      </div>
+      </div>
+
       <p>
         Channel planning was performed to maximise separation between equal channels and reduce co-channel
         interference. The 2.4 GHz, 5 GHz and 6 GHz bands were used in a coordinated way, prioritising
@@ -189,7 +226,7 @@
       </p>
       <ul>
         <li>Office LAN for business systems and staff devices.</li>
-        <li>Guest networks for each apartment or group of apartments.</li>
+        <li>Guest network with per-device Layer 2 isolation.</li>
         <li>Management network for infrastructure devices.</li>
         <li>IoT and cameras network for future services.</li>
       </ul>
@@ -200,7 +237,7 @@
 
       <h2>Implementation</h2>
       <p>
-        Implementation was carried out by me following the defined architecture, starting with the deployment
+        Implementation was carried out following the defined architecture, starting with the deployment
         of the core routing and switching infrastructure in the office rack and continuing with the installation
         of the residential distribution switch.
       </p>
@@ -214,6 +251,40 @@
         The final cutover from the legacy ISP router to the UDM Pro was performed in a controlled window to
         minimise disruption to day-to-day office operations.
       </p>
+
+        <!-- GALERÍA DE INSTALACIÓN: resto de fotos -->
+        <div class="section">
+        <h3>Installation Gallery</h3>
+        <div class="installation-gallery">
+            <figure>
+            <img src="assets/img/network/Rack1.png"
+                alt="Main office rack with UDM Pro and UniFi Enterprise 24 PoE"
+                class="zoomable">
+            <figcaption class="muted">Main office rack with UDM Pro and UniFi Enterprise 24 PoE</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/network/Rack2.png"
+                alt="Residential distribution rack with UniFi Pro Max 24 PoE"
+                class="zoomable">
+            <figcaption class="muted">Residential distribution rack with UniFi Pro Max 24 PoE</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/network/Wifi1.jpeg"
+                alt="Indoor UniFi U7 Pro access point covering one unit"
+                class="zoomable">
+            <figcaption class="muted">Indoor UniFi U7 Pro access point covering one unit</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/network/Wifi2.jpeg"
+                alt="Indoor UniFi U7 Pro access point covering the main office"
+                class="zoomable">
+            <figcaption class="muted">Indoor UniFi U7 Pro access point covering the main office</figcaption>
+            </figure>
+        </div>
+        </div>
 
       <h2>Results</h2>
       <p>
@@ -245,21 +316,11 @@
       <div class="panel">
         <h3>Technologies</h3>
         <ul class="tags vertical">
-          <li>UniFi Dream Machine Pro</li>
-          <li>UniFi Enterprise 24 PoE</li>
-          <li>UniFi Pro Max 24 PoE</li>
-          <li>UniFi U7 Pro / U7 Outdoor</li>
+          <li>UniFi SDN</li>
           <li>WiFi 7 (2.4 / 5 / 6 GHz)</li>
-          <li>10G SFP+ Uplinks</li>
+          <li>10G SFP+</li>
           <li>Cat 6 Structured Cabling</li>
           <li>VLAN Segmentation</li>
-        </ul>
-      </div>
-
-      <div class="panel">
-        <h3>Links</h3>
-        <ul>
-          <li><a href="#" target="_blank">Building network diagram</a></li>
         </ul>
       </div>
     </aside>
@@ -273,6 +334,9 @@
     <p>© <span id="year"></span> Lucas Carrasco</p>
   </div>
 </footer>
+<div id="lightbox-modal">
+    <img src="" alt="">
+</div>
 
 <script src="assets/js/main.js" defer></script>
 

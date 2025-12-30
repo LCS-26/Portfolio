@@ -4,339 +4,215 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NEPTUNE – IPv6 Multihoming Architecture – Lucas Carrasco</title>
-  <meta name="description" content="NEPTUNE: IPv6 multihoming architecture for multi-ISP networks.">
+  <meta name="description" content="NEPTUNE: IPv6 multihoming architecture for residential multi-ISP networks.">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav">
-      <a class="logo" href="index.html">LC</a>
-      <nav class="menu" id="menu">
-        <a href="projects.html">Projects</a>
-        <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
-        <a href="mailto:lucas@example.com">Contact</a>
-      </nav>
-      <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
-    </div>
-  </header>
 
-  <main class="container section">
-    <a class="breadcrumb" href="projects.html">← All projects</a>
-    <h1>NEPTUNE: IPv6 Multihoming Architecture for Residential Multi-ISP Networks</h1>
-    <p class="muted">2024 • IPv6, Multihoming, DHCPv6-PD, NPTv6, Protocol Design</p>
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="index.html">LC</a>
+    <nav class="menu" id="menu">
+      <a href="index.html#projects">Projects</a>
+      <a href="about.html" aria-current="page">About</a>
+      <a href="cv.html">CV</a>
+      <a href="mailto:carrascodominguezlucas@gmail.com">Contact</a>
+    </nav>
+    <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
+  </div>
+</header>
 
-    <div class="grid two">
-      <!-- COLUMNA PRINCIPAL -->
-      <section>
-        <h2>Introduction and Statement of the Problem</h2>
+<main class="container section">
+  <a class="breadcrumb" href="index.html">← All projects</a>
 
+  <h1>NEPTUNE: IPv6 Multihoming Architecture for Multi-ISP Networks</h1>
+  <p class="muted">2024 • IPv6, Multihoming, DHCPv6-PD, NPTv6, Protocol Design</p>
+
+  <div class="grid two">
+    <section>
+
+      <h2>Summary</h2>
+      <p>
+        Most fixed Internet access networks still rely on IPv4, typically assigning a single public address
+        to the customer router and using NAT to provide connectivity to internal hosts. While effective as
+        a workaround for address exhaustion, this model was never part of the original Internet design and
+        introduces limitations for end-to-end services such as point-to-point VPNs.
+      </p>
+      <p>
+        IPv6 addresses the public addressing problem through a vastly larger address space and native
+        auto-configuration mechanisms. However, IPv4 and IPv6 are not interoperable, requiring transition
+        mechanisms and increasing operational complexity, especially in mixed deployments.
+      </p>
+      <p>
+        A particularly unresolved issue is IPv6 multihoming in residential and small enterprise networks.
+        Unlike IPv4 NAT-based setups, IPv6 requires hosts to be addressed from each ISP prefix, complicating
+        traffic engineering, load balancing and failure recovery. NEPTUNE proposes a unified architecture
+        to address these limitations through coordinated prefix translation, traffic steering and policy control.
+      </p>
+
+      <h2>Motivation</h2>
+      <p>
+        The continuous growth of Internet-connected devices is increasingly exposing the architectural
+        limitations of IPv4-based networks. The lack of public addressing per device complicates or prevents
+        the deployment of services that rely on stable end-to-end connectivity.
+      </p>
+      <p>
+        At the same time, IPv6 lacks a practical solution for a very common real-world scenario: using
+        multiple Internet connections simultaneously in residential or small enterprise environments.
+        NEPTUNE is motivated by this gap, addressing an existing and operationally relevant problem rather
+        than a speculative future requirement.
+      </p>
+
+      <h2>State of the Art</h2>
+      <p>
+        The closest reference to the problem addressed by NEPTUNE is found in section 3.2.4 (Multihoming)
+        of <strong>RFC 7368 – IPv6 Home Networking Architecture Principles</strong>. While it acknowledges
+        the complexity of multihoming and encourages minimising architectural overhead, it does not provide
+        a complete framework suitable for real multi-ISP residential deployments.
+      </p>
+
+      <blockquote>
         <p>
-        To this day, the networks around the world still operate over Internet Protocol version 4,
-        commonly known as IPv4. In fixed Internet access, the most common deployment is having
-        a single public address assigned to the home or company router, giving private addresses
-        to the hosts (PCs and servers), and using NAT (Network Address Translation) to allow
-        these hosts to connect to the Internet. This setup was not intended to be used in the
-        original Internet Protocol proposal; it was born as a temporary workaround to the
-        exhaustion of the IPv4 address space, which makes it impossible to assign a public IP to
-        each end device. This method, however, does not work well with some remote services,
-        such as point-to-point VPNs.
+          However, the general multihoming problem is broad, and solutions suggested to date within the IETF
+          have included complex architectures for monitoring connectivity, traffic engineering, identifier-locator
+          separation, and connection survivability across multihoming events. (RFC 7368, 2014)
         </p>
+      </blockquote>
 
-        <p>
-        The IPv6 protocol emerges as an evolution of IPv4, having a much larger addressing space
-        (2<sup>128</sup> vs 2<sup>32</sup>), and coming together with specific auxiliary protocols for
-        address assignment and automatic host configuration. This tackles the public addressing
-        issue, but its implementation brings other problems, as when it was proposed the world
-        was already running over IPv4.
-        </p>
+      <p>
+        NEPTUNE builds on existing IPv6 and transition mechanisms rather than introducing entirely new ones,
+        combining them into a coherent and operationally manageable architecture.
+      </p>
 
-        <p>
-        A key limitation arises from the fact that IPv4 and IPv6 are not interoperable, meaning
-        that a node in an IPv6-only network will not be able to communicate with another node in
-        an IPv4-only network, even if they are physically reachable. For those scenarios, we need
-        to use the so-called transition mechanisms, designed to allow a smooth transition
-        between the two addressing spaces.
-        </p>
-
-        <p>
-        However, none of these protocols address a very common setup in small to medium-size
-        businesses: using multiple Internet connections at once, known as multihoming.
-        In an IPv4 setup with NAT, it is easy to divide the traffic flow by dynamically adjusting
-        which connections are translated to each of the public IP addresses. With IPv6, on the
-        other hand, you would need to assign an address from each of the circuits provided to
-        every host. This eliminates any possibility of applying balancing policies and requires a
-        reconfiguration of the whole network (revoking one of the prefixes assigned) in the event
-        of a circuit failure, causing inconvenient downtime.
-        </p>
-
-        <p>
-        Combining IPv4 and IPv6 networks complicates even more the management of these
-        deployments. To date, there is not an official nor proprietary method to address these
-        issues.
-        </p>
-
-        <p>
-        The Network Prefix Translation Unified Environment, NEPTUNE from now on, defines a
-        suite of protocols and mechanisms to allow for a smooth network deployment and
-        management, unifying traffic shaping, address translation and load balancing.
-        </p>
-
-
-        <h2>State of the Art</h2>
-
-        <p>
-        The closest approach for what this project aims to solve is described in section 3.2.4,
-        <strong>Multihoming</strong>, of <strong>RFC 7368 (2014) – IPv6 Home Networking Architecture Principles</strong>.
-        While it does not address in a global way the issues related to multi-ISP deployments, it
-        gives examples for simple setups, and leaves the door open to future improvements:
-        </p>
-
-        <blockquote>
-        <p>
-        However, the general multihoming problem is broad, and solutions suggested to
-        date within the IETF have included complex architectures for monitoring
-        connectivity, traffic engineering, identifier-locator separation, connection
-        survivability across multihoming events, and so on. It is thus important that the
-        homenet architecture should as far as possible minimize the complexity of any
-        multihoming support. (RFC 7368, 2014, section 3.2.4)
-        </p>
-        </blockquote>
-
-        <p>
-        Some existing protocols will be used in order to define and implement NEPTUNE.
-        These protocols and their roles will be described in greater detail along the project:
-        </p>
-
-        <h3>1. IPv6-Specific Protocols</h3>
-
-        <ul>
+      <h3>IPv6-Specific Protocols</h3>
+      <ul>
         <li>
-            <strong>DHCPv6 – Dynamic Host Configuration Protocol v6 (RFC 8415)</strong><br>
-            In IPv6, DHCP is used only by the ISP, to delegate an address prefix to each customer.
-            This technique is known as DHCPv6-PD (Prefix Delegation).
+          <strong>DHCPv6-PD (RFC 8415):</strong> used by ISPs to delegate one or more IPv6 prefixes to the
+          customer edge router, forming the basis of address assignment in residential IPv6 deployments.
         </li>
-
         <li>
-            <strong>RA – Router Advertisement (RFC 4861)</strong><br>
-            The router sends ICMPv6 messages to the hosts, announcing the network prefix
-            so they can acquire an address.
+          <strong>Router Advertisements (RFC 4861):</strong> ICMPv6 messages used by routers to announce
+          network prefixes and configuration parameters to hosts.
         </li>
-
         <li>
-            <strong>SLAAC – Stateless Address AutoConfiguration (RFC 4862)</strong><br>
-            Hosts autogenerate an address inside the announced prefix. A DAD (Duplicate Address
-            Detection) message is broadcast to ensure uniqueness.
+          <strong>SLAAC (RFC 4862):</strong> allows hosts to autonomously generate IPv6 addresses within
+          the advertised prefix, including Duplicate Address Detection to ensure uniqueness.
         </li>
-
         <li>
-            <strong>NPTv6 – Network Prefix Translation v6 (RFC 6296)</strong><br>
-            Allows stateless translation between IPv6 prefixes. Rarely used today, but essential for
-            NEPTUNE’s design.
+          <strong>NPTv6 (RFC 6296):</strong> provides stateless translation between IPv6 prefixes. Although
+          rarely deployed in practice, it is a key building block in NEPTUNE’s design.
         </li>
+      </ul>
+
+      <h3>IPv6 Transition Mechanisms</h3>
+      <ul>
+        <li>
+          <strong>Dual Stack (RFC 4213):</strong> parallel IPv4 and IPv6 operation, offering full compatibility
+          at the cost of duplicated addressing and management.
+        </li>
+        <li>
+          <strong>DS-Lite (RFC 6333):</strong> IPv6-only ISP networks with IPv4-only customer LANs, relying
+          on NAT mechanisms and offering no native IPv6 connectivity to hosts.
+        </li>
+        <li>
+          <strong>464XLAT (RFC 6877):</strong> commonly used in mobile networks, providing native IPv6 to
+          hosts while enabling access to IPv4-only services through translation.
+        </li>
+      </ul>
+
+      <h2>Aim of the Project</h2>
+      <ol>
+        <li>
+          Analyse the limitations of existing IPv6 protocols in multi-ISP residential deployments.
+        </li>
+        <li>
+          Enable a seamless transition from IPv4 to IPv6 while preserving end-to-end communication
+          in mixed environments.
+        </li>
+        <li>
+          Propose NEPTUNE as a unified framework to simplify traditionally complex IPv6 multihoming configurations.
+        </li>
+      </ol>
+
+      <h2>Preliminary Proposal</h2>
+      <p>
+        NEPTUNE is currently under development. The proposed architecture combines prefix translation,
+        DNS-aware traffic handling and policy-driven load balancing, as illustrated in the diagram below.
+      </p>
+
+      <figure class="project-hero">
+        <img src="assets/img/neptune/neptune.png" alt="NEPTUNE protocol architecture diagram">
+        <figcaption class="muted">
+          High-level architecture of the NEPTUNE control and data planes
+        </figcaption>
+      </figure>
+
+      <p>
+        Internally, hosts are configured with a preferred public IPv6 prefix advertised via Router
+        Advertisements. When multiple ISP prefixes are available, only one is exposed to the LAN,
+        while the Prefix Engine maintains a 1:1 NPTv6 mapping between external prefixes.
+      </p>
+
+      <p>
+        All outgoing traffic is routed through the NEPTUNE Virtual Interface, where flows are classified
+        based on destination capabilities, circuit health and configured policies. Translation and
+        encapsulation are handled transparently by dedicated data-plane modules.
+      </p>
+
+      <h3>Main Scenarios</h3>
+      <ul>
+        <li>
+          <strong>IPv6 destinations:</strong> traffic is distributed across IPv6-capable circuits, with
+          flow stickiness preserved to maintain return-path symmetry.
+        </li>
+        <li>
+          <strong>IPv4 destinations:</strong> public IPv4 circuits are prioritised when available;
+          otherwise traffic is balanced across IPv4-capable links.
+        </li>
+        <li>
+          <strong>Failure handling:</strong> prefix translation and circuit selection adapt dynamically,
+          without requiring internal network reconfiguration.
+        </li>
+      </ul>
+
+      <p>
+        A more detailed descriptive memory can be downloaded <a href="assets/docs/TFG_NEPTUNE.pdf" target="_blank" rel="noopener">here</a>. 
+        The final thesis is in development.
+      </p>
+
+    </section>
+
+    <aside>
+      <div class="panel">
+        <h3>Technologies</h3>
+        <ul class="tags vertical">
+          <li>IPv6</li>
+          <li>Multihoming</li>
+          <li>DHCPv6-PD</li>
+          <li>NPTv6</li>
+          <li>SLAAC &amp; RA</li>
+          <li>Control-plane design</li>
+          <li>Simulation</li>
         </ul>
+      </div>
 
-        <h3>2. IPv6 Transition Mechanisms</h3>
-
+      <div class="panel">
+        <h3>Links</h3>
         <ul>
-        <li>
-            <strong>DS – Dual Stack (RFC 4213)</strong><br>
-            Parallel IPv4 and IPv6 networks. Full compatibility but double address space.
-        </li>
-
-        <li>
-            <strong>DS-Lite – Dual Stack Lite (RFC 6333)</strong><br>
-            ISP network runs IPv6-only; customer LAN runs IPv4-only. Uses NAT46 + NAT64.
-            Does not provide native IPv6 connectivity to the host.
-        </li>
-
-        <li>
-            <strong>464XLAT (RFC 6877)</strong><br>
-            Common in mobile networks. Hosts generate IPv4-embedded IPv6 addresses,
-            and the ISP de-translates them to reach IPv4 services. Offers native IPv6 to hosts.
-        </li>
+          <li><a href="assets/docs/TFG_NEPTUNE.pdf" target="_blank" rel="noopener">Descriptive Memory (PDF)</a></li>
+          <li><a>Full thesis in development</a></li>
         </ul>
+      </div>
+    </aside>
+  </div>
+</main>
 
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> Lucas Carrasco</p>
+  </div>
+</footer>
 
-        <h2>Motivation</h2>
-
-        <p>
-        The rapid growth of devices connected to the Internet is beginning to expose the
-        limitations of the IPv4 infrastructure. Regardless of how powerful the hardware is on
-        paper, the lack of public addresses per device complicates the logical operation of certain
-        point-to-point services and makes others completely unavailable.
-        </p>
-
-        <p>
-        This, together with the lack of a protocol to address such a common setup as multi-ISP
-        load balancing for IPv6, creates a perfect gap for NEPTUNE to fill.
-        </p>
-
-        <p>
-        Therefore, the aim of the project is not to cover a need yet to be created, but to address a
-        real, existing problem that slows down the evolution of Internet architectures.
-        </p>
-
-
-        <h2>Aim of the Project</h2>
-
-        <ol>
-        <li>
-            To analyze the current limitations of existing IPv6 protocols, identifying the
-            challenges that hinder certain deployment scenarios.
-        </li>
-
-        <li>
-            To enable a seamless transition from IPv4 towards IPv6, ensuring interoperability
-            and preserving end-to-end communication in mixed environments.
-        </li>
-
-        <li>
-            To propose a de-facto standard for IPv6 deployments, defining NEPTUNE as a
-            unified framework to simplify traditionally complex configurations.
-        </li>
-        </ol>
-
-        <h2>Preliminary Proposal</h2>
-        <p>
-            NEPTUNE is a project currently under development. The following section provides
-            a brief description of how the protocol is intended to operate, in conjunction
-            with the architecture shown in the diagram below.
-        </p>
-
-        <!-- DIAGRAMA DEL PROTOCOLO -->
-        <figure class="project-hero">
-            <img src="assets/img/neptune/neptune.png" alt="NEPTUNE protocol architecture diagram">
-            <figcaption class="muted">Figure — High-level architecture of the NEPTUNE control and data planes.</figcaption>
-        </figure>
-
-        <p>
-            Network clients may have the following types of addresses in their network stacks,
-            listed in order of preference:
-        </p>
-
-        <ol>
-            <li>
-            <strong>IPv6 public</strong>: automatically configured via RA + SLAAC.
-            <ul>
-                <li>
-                If more than one ISP (and therefore more than one delegated prefix) is present,
-                only one prefix will be advertised internally. A 1:1 NPTv6 mapping table among
-                prefixes will be maintained by the Prefix Engine for inter-prefix translation.
-                </li>
-            </ul>
-            </li>
-
-            <li>
-            <strong>IPv4 public</strong>: statically assigned to selected hosts when an IPv4 BGP circuit exists.
-            </li>
-
-            <li>
-            <strong>IPv4 private</strong>: assigned statically or via DHCP when an IPv4 NATed circuit is present.
-            </li>
-
-            <li>
-            <strong>IPv6 private (ULA)</strong>: only generated when M:1 NATv6 is required.
-            <ul>
-                <li>
-                For example, a 5G modem used as a backup connection may only provide a single
-                IPv6 address via 464XLAT.
-                </li>
-            </ul>
-            </li>
-        </ol>
-
-        <p>
-            The <strong>DNS Engine</strong> will process DNS queries and generate synthetic responses whenever
-            translation is required. Latency and reliability metrics derived from these queries
-            will also feed the Load Balancer to influence circuit weighting and selection.
-        </p>
-
-        <p>
-            The <strong>NEPTUNE Virtual Interface</strong> acts as a sink for all outgoing LAN traffic.
-            The NEPTUNE Core then handles balancing, translation and encapsulation of flows based on:
-        </p>
-
-        <ul>
-            <li>The IP capabilities of the remote host (IPv4/IPv6).</li>
-            <li>The available circuits and their current health state.</li>
-            <li>The configuration and applied policies.</li>
-        </ul>
-
-        <h3>Main scenarios</h3>
-
-        <ul>
-            <li>
-            <strong>Host → IPv6-capable server (multi-flow)</strong>:  
-            Flows are distributed across all IPv6-capable circuits according to real-time link conditions.
-            Each flow remains pinned to its circuit to preserve return-path symmetry.
-            </li>
-
-            <li>
-            <strong>Host → IPv6-capable server (single-flow)</strong>:  
-            The Load Balancer selects the best circuit at connection setup.  
-            5-tuple stickiness can be disabled to allow spreading a single connection across circuits,
-            though it remains enabled by default to avoid breaking P2P-style services.
-            </li>
-
-            <li>
-            <strong>Host → IPv4-only server (multi-flow)</strong>:  
-            If the host has a static public IPv4 assigned via BGP, that circuit is prioritised.
-            Otherwise, load is split across all IPv4-capable circuits.
-            </li>
-
-            <li>
-            <strong>Host → IPv4-only server (single-flow)</strong>:  
-            If a static public IPv4 exists, it is used. Otherwise the Load Balancer selects
-            the best IPv4-capable circuit given current link conditions. Stickiness may be disabled if required.
-            </li>
-        </ul>
-
-        <p>
-            The <strong>translator/encapsulator modules</strong> perform the required transformations
-            (NPTv6, NAT44, NAT46/NAT64) and manage packet encapsulation and decapsulation.
-        </p>
-
-        <p>
-            All policies configured through the <strong>NEPTUNE CLI/GUI</strong> are stored and enforced
-            by the Policy Engine, which communicates directly with all core modules.  
-            The data plane and control plane are strictly separated.  
-            A dedicated <strong>Telemetry Module</strong> continuously logs circuit health, performance
-            metrics and relevant operational events to provide observability and aid debugging.
-        </p>
-      </section>
-
-      <!-- ASIDE -->
-      <aside>
-        <div class="panel">
-          <h3>Technologies</h3>
-          <ul class="tags vertical">
-            <li>IPv6</li>
-            <li>Multihoming</li>
-            <li>DHCPv6-PD</li>
-            <li>NPTv6</li>
-            <li>SLAAC &amp; RA</li>
-            <li>Control-plane design</li>
-            <li>Simulation</li>
-          </ul>
-        </div>
-
-        <div class="panel">
-          <h3>Links</h3>
-          <ul>
-            <li><a href="assets/docs/TFG_NEPTUNE.pdf" target="_blank" rel="noopener">Full thesis (PDF)</a></li>
-            <!-- Añade más enlaces si quieres -->
-          </ul>
-        </div>
-      </aside>
-    </div>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>© <span id="year"></span> Lucas Carrasco</p>
-    </div>
-  </footer>
-
-  <script src="assets/js/main.js" defer></script>
+<script src="assets/js/main.js" defer></script>
 </body>
 </html>

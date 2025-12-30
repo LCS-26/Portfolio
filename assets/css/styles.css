@@ -539,10 +539,22 @@ h1,h2,h3{
    Installation gallery + lightbox
    ============================ */
 
-.installation-gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:24px;
+.installation-gallery {
+  column-count: 1;
+  column-gap: 24px;
+}
+
+/* Desktop grande: 3 columnas */
+@media (min-width: 1300px) {
+  .installation-gallery {
+    column-count: 2;
+  }
+}
+
+/* Cada figura debe comportarse como bloque */
+.installation-gallery figure {
+  break-inside: avoid;
+  margin-bottom: 24px;
 }
 
 .installation-gallery img{

@@ -13,9 +13,10 @@
   <div class="container nav">
     <a class="logo" href="index.html">LC</a>
     <nav class="menu" id="menu">
-      <a href="projects.html">Projects</a>
-      <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
-      <a href="mailto:lucas@example.com">Contact</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="about.html" aria-current="page">About</a>
+      <a href="cv.html">CV</a>
+      <a href="mailto:carrascodominguezlucas@gmail.com">Contact</a>
     </nav>
     <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
   </div>
@@ -23,14 +24,14 @@
 
 <main class="container section">
 
-  <a class="breadcrumb" href="projects.html">← All projects</a>
+  <a class="breadcrumb" href="index.html">← All projects</a>
 
   <h1>Point-to-Point Wireless Backhaul for Rural Broadband</h1>
   <p class="muted">2020–2021 • Wireless Links, Routing, Rural Connectivity, Ubiquiti airMAX</p>
 
   <div class="project-hero">
     <!-- Imagen general del enlace / topología -->
-    <img src="assets/img/ptp-overview.png" alt="Point-to-point wireless backhaul topology diagram">
+    <img src="assets/img/ptp/Diagram.png" alt="Point-to-point wireless backhaul topology diagram">
   </div>
 
   <div class="grid two">
@@ -75,7 +76,7 @@
       <ul>
         <li>
           <strong>Throughput:</strong> enough to support multiple simultaneous video calls, cloud document editing
-          and general web access at each remote site.
+          and general web access.
         </li>
         <li>
           <strong>Latency and jitter:</strong> significantly better than the ADSL link, suitable for real-time audio
@@ -105,10 +106,12 @@
 
       <h3>Topology &amp; Network Architecture</h3>
       <p>
-        The architecture is built around a single fibre-connected site acting as the upstream gateway. From this
-        location, point-to-point wireless links connect several remote homes using dedicated radios. Each link
-        behaves as a Layer-2 bridge, allowing the remote networks to integrate cleanly with the central router
-        while remaining logically independent.
+      The architecture is built around a single fibre-connected site acting as the upstream gateway. From this location, 
+      a point-to-point wireless link was first deployed to provide reliable connectivity to my own home, which suffered 
+      from persistent ADSL limitations. Following the success of this initial deployment, two additional point-to-point 
+      links were later installed to extend connectivity to two nearby family properties facing similar constraints. 
+      Each link operates as a Layer-2 bridge, allowing the remote networks to integrate seamlessly with the central 
+      router while remaining logically independent.
       </p>
       <p>
         A <strong>Ubiquiti EdgeRouter X</strong> is deployed at the fibre-connected site to:
@@ -148,7 +151,26 @@
         <li>Frequency planning considered coexistence between links to reduce self-interference.</li>
       </ul>
 
-      <h2>Implementation</h2>
+        <!-- GALERÍA DE INSTALACIÓN -->
+        <div class="section">
+        <h2>Implementation</h2>
+        <h3>Installation Gallery</h3>
+        <div class="installation-gallery">
+            <figure>
+            <img src="assets/img/ptp/Router.png"
+                alt="EdgeRouterX"
+                class="zoomable">
+            <figcaption class="muted">EdgeRouter X & AirMax AC Radio</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/ptp/Radio.png"
+                alt="Mounted Radio"
+                class="zoomable">
+            <figcaption class="muted">Radio Mounted in a Pole</figcaption>
+            </figure>
+        </div>
+        </div>
       <p>
         The implementation started with a single point-to-point link between the fibre-connected site and the
         primary home. A pair of airMAX ac radios were installed, aligned and configured in bridge mode, with the
@@ -165,14 +187,46 @@
         on actual performance rather than theoretical values.
       </p>
 
-      <h2>Results</h2>
+        <!-- GALERÍA DE RESULTADOS: -->
+        <div class="section">
+        <h2>Results</h2>
+        <div class="installation-gallery">
+            <figure>
+            <img src="assets/img/ptp/Dashboard.png"
+                alt="Link Dashboard"
+                class="zoomable">
+            <figcaption class="muted">Link Dashboard</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/ptp/Constellation.png"
+                alt="Constellation"
+                class="zoomable">
+            <figcaption class="muted">256 QAM Constellation</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/ptp/Transmit.png"
+                alt="Transmission"
+                class="zoomable">
+            <figcaption class="muted">Transmission Speed Test</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/ptp/Receive.png"
+                alt="Reception"
+                class="zoomable">
+            <figcaption class="muted">Reception Speed Test</figcaption>
+            </figure>
+        </div>
+        </div>
       <p>
         The wireless backhaul successfully replaced the original ADSL connection as the primary access method at
         the affected locations:
       </p>
       <ul>
-        <li>Latency and jitter were reduced to levels comparable to wired broadband.</li>
-        <li>Available throughput increased significantly, enabling stable video conferencing.</li>
+        <li>Latency and jitter were reduced to levels comparable to wired broadband (6-7ms).</li>
+        <li>Available throughput increased significantly (~400Mbps), enabling stable video conferencing.</li>
         <li>Cloud-based tools, software updates and streaming became usable without saturating the link.</li>
       </ul>
       <p>
@@ -195,7 +249,7 @@
           overall availability.
         </li>
         <li>
-          Integrating the backhaul with consumer-grade routers highlighted the value of making infrastructure
+          Integrating the backhaul with enterprise-grade routers highlighted the value of making infrastructure
           effectively transparent for end users.
         </li>
         <li>
@@ -211,18 +265,9 @@
         <h3>Technologies</h3>
         <ul class="tags vertical">
           <li>Ubiquiti airMAX ac</li>
-          <li>Ubiquiti EdgeRouter X</li>
           <li>Layer-2 Bridging</li>
-          <li>NAT &amp; Routing</li>
-          <li>QoS / Traffic Shaping</li>
+          <li>NAT & Routing</li>
           <li>Rural Connectivity</li>
-        </ul>
-      </div>
-
-      <div class="panel">
-        <h3>Links</h3>
-        <ul>
-          <li><a href="#" target="_blank">Backhaul topology diagram</a></li>
         </ul>
       </div>
     </aside>
@@ -236,8 +281,13 @@
     <p>© <span id="year"></span> Lucas Carrasco</p>
   </div>
 </footer>
-
+    <div id="lightbox-modal">
+        <img src="" alt="">
+    </div>
 <script src="assets/js/main.js" defer></script>
-
+<script>
+  console.log("INLINE SCRIPT OK", new Date().toISOString());
+</script>
+<script src="assets/js/main.js?v=999" defer></script>
 </body>
 </html>

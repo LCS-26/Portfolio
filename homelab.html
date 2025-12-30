@@ -13,9 +13,10 @@
   <div class="container nav">
     <a class="logo" href="index.html">LC</a>
     <nav class="menu" id="menu">
-      <a href="projects.html">Projects</a>
-      <a href="https://github.com/LCS-26" target="_blank" rel="noopener">GitHub</a>
-      <a href="mailto:lucas@example.com">Contact</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="about.html" aria-current="page">About</a>
+      <a href="cv.html">CV</a>
+      <a href="mailto:carrascodominguezlucas@gmail.com">Contact</a>
     </nav>
     <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
   </div>
@@ -23,14 +24,14 @@
 
 <main class="container section">
 
-  <a class="breadcrumb" href="projects.html">← All projects</a>
+  <a class="breadcrumb" href="index.html">← All projects</a>
 
   <h1>Homelab Infrastructure Platform for Self-Hosted Services & Remote Backups</h1>
   <p class="muted">2021 • Virtualization, Storage, Backup Architecture, Self-Hosting</p>
 
   <div class="project-hero">
     <!-- OPCIONAL: imagen general de la infraestructura -->
-    <img src="assets/img/homelab-overview.png" alt="Homelab infrastructure overview diagram">
+    <img src="assets/img/homelab/dell.jpeg" alt="Homelab Main Server">
   </div>
 
   <div class="grid two">
@@ -44,8 +45,10 @@
       </p>
       <p>
         The platform is structured as a two-site deployment: a primary virtualization host for production workloads,
-        and a secondary remote server dedicated to off-site backups via Proxmox Backup Server. A self-hosted
-        Nextcloud instance is used as a representative workload and is deployed using a multi-VM architecture,
+        and a secondary remote server dedicated to off-site backups via Proxmox Backup Server. 
+      </p>
+      <p>
+        A self-hosted Nextcloud instance is used as a representative workload and is deployed using a multi-VM architecture,
         including a dedicated reverse proxy and DNS service.
       </p>
 
@@ -89,12 +92,30 @@
       </p>
 
       <h3>Physical Infrastructure</h3>
+        <!-- GALERÍA DE INSTALACIÓN -->
+        <div class="section">
+        <div class="installation-gallery">
+            <figure>
+            <img src="assets/img/homelab/Server1.png"
+                alt="Dell Poweredge R730"
+                class="zoomable">
+            <figcaption class="muted">Dell Poweredge R730</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/homelab/Server2.png"
+                alt="DIY Server"
+                class="zoomable">
+            <figcaption class="muted">DIY Backup Server</figcaption>
+            </figure>
+        </div>
+        </div>
       <p><strong>Primary site – Dell PowerEdge R730</strong></p>
       <ul>
         <li>Intel Xeon E5-2690 v4</li>
         <li>384 GB RAM</li>
-        <li>3 × 400 GB SLC SSD (performance tier)</li>
-        <li>3 × 12 TB HDD (capacity tier)</li>
+        <li>3 × 400 GB SLC SSD</li>
+        <li>3 × 12 TB HDD</li>
       </ul>
 
       <p><strong>Secondary site – DIY backup server</strong></p>
@@ -104,6 +125,13 @@
         <li>2 × 120 GB SSD</li>
         <li>3 × 4 TB HDD</li>
       </ul>
+
+      <p>
+        The hardware selection was based on a balance between computing performance and cost. The chosen components have reached 
+        their end-of-life period in the enterprise environment, meaning that the acquisition cost was relatively low in the second-hand
+        market, despite the hardware being reasonably recent, having PCIe 3.0 and DDR4 RAM Slots, making them compatible with 
+        modern peripherals and memory.
+      </p>
 
       <p>
         Both machines provide hardware-level remote management:
@@ -118,19 +146,6 @@
         operating system is not reachable. In practice, this makes it possible to perform maintenance,
         recover from failed updates or test failure scenarios without physical access to the machines.
       </p>
-
-      <h3>Virtualization &amp; Service Design</h3>
-      <p>
-        Proxmox VE is used as the virtualization layer on the primary server. To avoid monolithic designs and improve
-        maintainability, services are split into multiple independent VMs.
-      </p>
-
-      <p>Example deployment: <strong>Nextcloud stack</strong></p>
-      <ul>
-        <li><strong>Nextcloud VM:</strong> application and data services.</li>
-        <li><strong>NGINX VM:</strong> TLS termination and reverse proxy.</li>
-        <li><strong>AdGuard Home VM:</strong> DNS sinkhole and internal resolution.</li>
-      </ul>
 
       <h3>Storage Architecture</h3>
       <p>
@@ -165,6 +180,13 @@
         based on VM snapshots.
       </p>
 
+      <figure>
+      <img src="assets/img/homelab/Backups.png"
+          alt="Backups"
+          class="zoomable">
+      <figcaption class="muted">Backup Infrastruture</figcaption>
+      </figure>
+
       <ol>
         <li>
           <strong>Local backups on the Dell R730:</strong><br>
@@ -188,7 +210,57 @@
         with higher granularity and older ones in a more compact form.
       </p>
 
+      <p>
+        Remote Backups from the secondary server towards the main server can also be performed in the event 
+        that some services want to be run locally at site B in the future.
+      </p>
+
+      <h3>Virtualization &amp; Service Design</h3>
+      <p>
+        Proxmox VE is used as the virtualization layer on the primary server. To avoid monolithic designs and improve
+        maintainability, services are split into multiple independent VMs.
+      </p>
+
+        <!-- GALERÍA DE INSTALACIÓN -->
+        <div class="section">
+        <div class="installation-gallery">
+            <figure>
+            <img src="assets/img/homelab/Nextcloud Dashboard.png"
+                alt="Nextcloud Dashboard"
+                class="zoomable">
+            <figcaption class="muted">Working Nextcloud Dashboard</figcaption>
+            </figure>
+
+            <figure>
+            <img src="assets/img/homelab/Nextcloud Diagram.png"
+                alt="Nextcloud Infrastructure"
+                class="zoomable">
+            <figcaption class="muted">Nextcloud Infrastructure</figcaption>
+            </figure>
+        </div>
+        </div>
+
+      <p>Example deployment: <strong>Nextcloud stack</strong></p>
+      <ul>
+        <li><strong>Nextcloud VM:</strong> application and data services.</li>
+        <li><strong>NGINX VM:</strong> TLS termination and reverse proxy.</li>
+        <li><strong>AdGuard Home VM:</strong> DNS sinkhole and internal resolution.</li>
+      </ul>
+
+      <p>
+        The traffic flows through the NGINX reverse proxy, which manages the forwarding and the SSL certificate renewals in order to access
+        the Nextcloud instance securely. The AdGuard DNS server redirects the requests from local clients to avoid network loops.
+      </p>
+
       <h2>Implementation</h2>
+
+      <figure>
+      <img src="assets/img/homelab/Proxmox Dashboard.png"
+          alt="Dashboard"
+          class="zoomable">
+      <figcaption class="muted">Proxmox Dashboard</figcaption>
+      </figure>
+
       <p>
         Proxmox VE was installed and configured on both machines, with storage pools and networking defined prior
         to deploying any service.
@@ -238,13 +310,6 @@
           <li>iDRAC / IPMI</li>
         </ul>
       </div>
-
-      <div class="panel">
-        <h3>Links</h3>
-        <ul>
-          <li><a href="#" target="_blank">Architecture diagram</a></li>
-        </ul>
-      </div>
     </aside>
 
   </div>
@@ -256,7 +321,9 @@
     <p>© <span id="year"></span> Lucas Carrasco</p>
   </div>
 </footer>
-
+<div id="lightbox-modal">
+    <img src="" alt="">
+</div>
 <script src="assets/js/main.js" defer></script>
 
 </body>
