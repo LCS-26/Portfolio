@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NEPTUNE – IPv6 Multihoming Architecture – Lucas Carrasco</title>
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
-  <meta name="description" content="NEPTUNE: IPv6 multihoming architecture for residential multi-ISP networks.">
+  <meta name="description" content="NEPTUNE: an implemented IPv6 multihoming framework for residential multi-ISP networks, built and validated as a final year thesis (10/10).">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
     <a class="logo" href="index.html">LC</a>
     <nav class="menu" id="menu">
       <a href="index.html#projects">Projects</a>
-      <a href="about.html" aria-current="page">About</a>
+      <a href="about.html">About</a>
       <a href="cv.html">CV</a>
       <a href="mailto:carrascodominguezlucas@gmail.com">Contact</a>
     </nav>
@@ -27,7 +27,7 @@
   <a class="breadcrumb" href="index.html">← All projects</a>
 
   <h1>NEPTUNE: IPv6 Multihoming Architecture for Multi-ISP Networks</h1>
-  <p class="muted">2024 • IPv6, Multihoming, DHCPv6-PD, NPTv6, Protocol Design</p>
+  <p class="muted">2025–26 • Final Year Thesis (10/10) • IPv6, Multihoming, DHCPv6-PD, NPTv6, Protocol Design</p>
 
   <div class="grid two">
     <section>
@@ -135,10 +135,13 @@
         </li>
       </ol>
 
-      <h2>Preliminary Proposal</h2>
+      <h2>Implementation</h2>
       <p>
-        NEPTUNE is currently under development. The proposed architecture combines prefix translation,
-        DNS-aware traffic handling and policy-driven load balancing, as illustrated in the diagram below.
+        NEPTUNE was implemented in Python over Linux network namespaces connected with veth pairs,
+        with management, control and data planes kept separate. The lab topology itself is generated
+        from a declarative YAML configuration, so different multihoming scenarios can be spun up
+        without touching the underlying code. The architecture combines prefix translation, traffic
+        classification and policy-driven load balancing, as illustrated in the diagram below.
       </p>
 
       <figure class="project-hero">
@@ -176,9 +179,34 @@
         </li>
       </ul>
 
+      <h2>Results</h2>
       <p>
-        A more detailed descriptive memory can be downloaded <a href="assets/docs/Anexo B-TFG.pdf" target="_blank" rel="noopener">here</a>. 
-        The final thesis is in development.
+        The implementation was validated under ICMPv6 traffic at 1000 pps, across three failure
+        scenarios (F1–F3) and three recovery scenarios (R1–R3) with a primary/backup circuit
+        hierarchy:
+      </p>
+      <ul>
+        <li>
+          <strong>Failover:</strong> data-plane circuit switchover after recovery measured
+          approximately 6 ms. This covers the switching action itself, not failure detection,
+          which depends on the monitoring interval configured.
+        </li>
+        <li>
+          <strong>Load balancing:</strong> a configured 70/30 split was observed at 72.5/27.5
+          across 200 flows.
+        </li>
+        <li>
+          <strong>Translation overhead:</strong> around 0.3 ms, incurred only on the first packet
+          of a new flow while the route is installed; subsequent packets are served from the flow
+          table with no added latency.
+        </li>
+        <li>
+          <strong>NPTv6 translation</strong> was validated end-to-end against packet captures.
+        </li>
+      </ul>
+      <p>
+        A more detailed descriptive memory can be downloaded <a href="assets/docs/Anexo B-TFG.pdf" target="_blank" rel="noopener">here</a>.
+        The final thesis was completed during the 2025–26 academic year, graded 10/10.
       </p>
 
     </section>
@@ -193,7 +221,9 @@
           <li>NPTv6</li>
           <li>SLAAC &amp; RA</li>
           <li>Control-plane design</li>
-          <li>Simulation</li>
+          <li>Python</li>
+          <li>Linux network namespaces</li>
+          <li>veth</li>
         </ul>
       </div>
 
@@ -201,7 +231,7 @@
         <h3>Links</h3>
         <ul>
           <li><a href="assets/docs/Anexo B-TFG.pdf" target="_blank" rel="noopener">Descriptive Memory (PDF)</a></li>
-          <li><a>Full thesis in development</a></li>
+          <li>Full thesis completed — available on request</li>
         </ul>
       </div>
     </aside>
