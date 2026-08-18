@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inmoadrada – Systems & Network Ownership (2022–2026) – Lucas Carrasco</title>
+  <link rel="icon" href="assets/img/favicon.png" type="image/png">
+  <meta name="description" content="Four years as the sole person responsible for systems, network and integrations at a small real estate company expanding into short-term rentals.">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="index.html">LC</a>
+    <nav class="menu" id="menu">
+      <a href="index.html#projects">Projects</a>
+      <a href="about.html">About</a>
+      <a href="cv.html">CV</a>
+      <a href="mailto:carrascodominguezlucas@gmail.com">Contact</a>
+    </nav>
+    <button class="menu-toggle" aria-controls="menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main class="container section">
+  <a class="breadcrumb" href="index.html">← All projects</a>
+
+  <h1>Inmoadrada: Systems & Network Ownership</h1>
+  <p class="muted">2022–2026 • Four consecutive summer internships, sole responsibility for systems, network and integrations</p>
+
+  <div class="grid two">
+    <section>
+
+      <h2>Summary</h2>
+      <p>
+        Since 2022, I have been the only person responsible for IT systems, network infrastructure
+        and software integrations at Inmoadrada, a small real estate agency in La Adrada, Spain. What
+        started as a straightforward office network build grew, year over year, alongside the
+        business itself: a full network migration, a document management overhaul, and — starting in
+        2024 — the infrastructure and integrations behind the company's expansion into short-term
+        rentals across an entire residential building.
+      </p>
+      <p>
+        Unlike the independent projects elsewhere in this portfolio, this work was carried out for a
+        real business with real users and real continuity requirements: every system had to keep
+        running for the next four years, not just for a demo. Support and incident response ran in
+        parallel throughout every year listed below.
+      </p>
+
+      <h2>Timeline</h2>
+
+      <h3>2022 — Network from scratch</h3>
+      <p>
+        Following the office's relocation to a new building, I designed and deployed the network from
+        the ground up using Ubiquiti's UniFi Network, Access and Protect, replacing an ad-hoc setup
+        with centralised management.
+      </p>
+
+      <h3>2023 — Document management & fleet renewal</h3>
+      <p>
+        Migrated the office from SMB file shares to a self-hosted Nextcloud All-in-One instance, and
+        led the renewal of the office computer fleet away from Windows 7. Introduced a policy for
+        historical document archiving.
+      </p>
+
+      <h3>2024 — Expansion into short-term rentals</h3>
+      <p>
+        The company acquired an entire residential building — six independent rental units plus the
+        office itself, 42 beds in total — and the network had to be redesigned for a mixed office and
+        hospitality environment: a UDM Pro edge gateway, a redundant 10 Gbps SFP+ backbone protected
+        by Spanning Tree, 8 WiFi 7 access points, Cat 6 structured cabling, and VLAN segmentation
+        across office, guest, management and IoT traffic, plus camera coverage.
+      </p>
+      <p>
+        <a href="network.html">→ Full write-up: Hospitality Network Expansion</a>
+      </p>
+
+      <h3>2025 — Smart building layer</h3>
+      <p>
+        Deployed Shelly relays and centralised WiFi-based climate control across the units, and
+        integrated Nuki smart locks with the Lodgify property management system to automate
+        guest check-in and check-out.
+      </p>
+
+      <h3>2026 — Central orchestration</h3>
+      <p>
+        Built a self-hosted services portal (Homepage) running in an LXC container, brought Home
+        Assistant online as the central automation and monitoring layer tying together locks,
+        climate and relays, and added MagicInfo for on-site digital signage.
+      </p>
+      <p class="muted">
+        The short-term rental business opens in September 2026. The Nuki–Lodgify check-in/check-out
+        integration is built and configured but has not yet processed a real guest check-in — this
+        page will be updated once it has been validated in production.
+      </p>
+
+    </section>
+
+    <aside>
+      <div class="panel">
+        <h3>Role</h3>
+        <ul class="tags vertical">
+          <li>Sole systems &amp; network owner</li>
+          <li>4 consecutive summers</li>
+          <li>Continuous support &amp; incidents</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>Technologies</h3>
+        <ul class="tags vertical">
+          <li>UniFi (Network, Access, Protect)</li>
+          <li>Nextcloud AiO</li>
+          <li>Lodgify PMS</li>
+          <li>Nuki</li>
+          <li>Shelly</li>
+          <li>Home Assistant</li>
+          <li>LXC</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>Related</h3>
+        <ul>
+          <li><a href="network.html">Hospitality Network Expansion (2024 deep dive)</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> Lucas Carrasco</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
