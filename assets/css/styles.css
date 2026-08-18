@@ -402,6 +402,14 @@ h1,h2,h3{
   border-radius:14px;
 }
 
+/* Diagramas / capturas: mostrar completos, no recortados */
+.project-card img.diagram-thumb{
+  object-fit:contain;
+  background:#ffffff;
+  padding:12px;
+  border:1px solid var(--border);
+}
+
 /* Texto */
 .project-content{
   display:flex;
