@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>17 kWp Residential Solar With Battery & Backup – Lucas Carrasco</title>
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
-  <meta name="description" content="Design and deployment of a 17 kWp residential solar system with 28.8 kWh of lithium storage, Victron ESS and automatic backup.">
+  <meta name="description" content="Design and deployment of a 17 kWp residential solar system with lithium battery storage, Victron ESS and automatic backup.">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -25,7 +25,7 @@
   <main class="container section">
     <a class="breadcrumb" href="index.html">← All projects</a>
     <h1>17 kWp Residential Solar With Battery &amp; Backup</h1>
-    <p class="muted">2025 • Energy systems, PV design, Victron ESS, Storage</p>
+    <p class="muted">2025–26 • Energy systems, PV design, Victron ESS, Storage</p>
 
     <div class="grid two">
       <!-- MAIN COLUMN -->
@@ -158,6 +158,26 @@
           storage, offering around 20% more capacity than needed to make up for future cell degradation.
         </p>
 
+        <h3>Storage Expansion</h3>
+        <p>
+          After a year of real operating data, the battery bank was expanded from six to nine
+          Pylontech US5000 units — <strong>28.8 kWh to 43.2 kWh</strong> — in January 2026, driven
+          by two patterns that hadn't been fully captured by the initial sizing model. First, on
+          hot summer nights the radiant system's cooling load could draw the battery down significantly
+          overnight, while during the day production was sometimes curtailed once the battery had
+          already reached full charge — a larger bank absorbs more of that daytime surplus and covers
+          more of the overnight load without falling back to the grid. Second, during shoulder seasons,
+          when non-HVAC consumption is low, extra capacity lets a sunny day's surplus carry over and
+          cover a cloudy day immediately after, instead of relying on the grid in between. A secondary
+          benefit was raising the minimum reserved state of charge, which increases backup autonomy
+          during outages.
+        </p>
+        <p>
+          The system runs a zero-export configuration by design — there is no intentional feed-in to
+          the grid. The marginal export visible in the results below reflects the practical limits of
+          a real-time balancing control loop, not a deliberate export strategy.
+        </p>
+
         <h2>Install</h2>
         <p>
           The installation phase included the complete physical integration of the PV array, inverter,
@@ -204,28 +224,39 @@
 
         <h2>Results</h2>
         <p>
-          Two months after commissioning, the system has achieved near-100% demand coverage, in line
-          with the expected performance derived from the PVGIS modelling and consumption analysis.
-          The following graphs illustrate the production profile, daily load coverage and battery
-          utilisation during this period.
+          Over the first 12 months of operation (September 2025 – August 2026), the system covered
+          <strong>65.1% of total consumption</strong> from solar and battery combined. Of
+          <strong>20,608 kWh</strong> consumed, <strong>15,246 kWh</strong> came from solar
+          production and only <strong>7,195 kWh</strong> from the grid. Export to the grid was
+          negligible at <strong>133 kWh</strong> — under 1% of solar production — consistent with
+          the system's zero-export design; that residual reflects the practical limits of a
+          real-time balancing control loop, not intentional feed-in.
+        </p>
+        <p class="muted">
+          Note: these four figures don't sum exactly — solar production is metered in DC by the
+          MPPT controller, upstream of the Multiplus inverter's DC–AC conversion losses, while
+          consumption, import and export are all metered downstream in AC. The resulting gap
+          (≈1,700 kWh, 7.6% of total input) is consistent with inverter conversion losses and the
+          difference in measurement points, not a data error.
+        </p>
+        <p>
+          Coverage varies sharply with season. Winter months (November–February), driven by the
+          heat pump's heating load, show consumption far outpacing production, with the battery
+          running low overnight and the system falling back on the grid for a large share of the
+          load — in line with the ~50% winter coverage PVGIS had projected at design time. Summer
+          months (June–August) show high production and high consumption in parallel, largely
+          from cooling; average battery state of charge stays elevated, but hot nights were enough
+          to draw it down meaningfully before the next day's charge, which is what motivated the
+          storage expansion described above. Shoulder months (March–May) show the clearest
+          surplus, with production consistently ahead of consumption.
         </p>
 
-        <!-- GRÁFICOS DE RESULTADOS (placeholders) -->
-        <div class="installation-gallery">
-            <figure>
-            <img src="assets/img/solar/sep.png"
-                alt="Monthly PV data September"
-                class="zoomable">
-            <figcaption class="muted">Monthly PV production during the month of September</figcaption>
-            </figure>
-
-            <figure>
-            <img src="assets/img/solar/oct.png"
-                alt="Monthly PV data October"
-                class="zoomable">
-            <figcaption class="muted">Monthly PV production during the month of October</figcaption>
-            </figure>
-        </div>
+        <figure class="project-hero">
+          <img src="assets/img/solar/results-12mo.png" alt="12-month solar, consumption and battery SoC data">
+          <figcaption class="muted">
+            Monthly consumption, solar production and battery state of charge, September 2025 – August 2026
+          </figcaption>
+        </figure>
 
         <h2>What I Learned</h2>
         <ul>
