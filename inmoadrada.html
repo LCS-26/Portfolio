@@ -66,7 +66,7 @@
       <p>
         The existing file-sharing setup was a flat SMB share with no access control or audit trail,
         increasingly untenable as document volume grew. I migrated the office to a self-hosted
-        Nextcloud All-in-One instance (open source, chosen for flexibility and to avoid licence and
+        Nextcloud instance (open source, chosen for flexibility and to avoid licence and
         vendor lock-in), adding per-user permissions and versioning, and used the
         migration as the trigger to define and enforce a historical document archiving policy. In
         parallel, I led the renewal of the office's computer fleet off Windows 7, phasing it around
@@ -96,7 +96,9 @@
       <p>
         Built a self-hosted services portal (Homepage) running in an LXC container, brought Home
         Assistant online as the central automation and monitoring layer tying together locks,
-        climate and relays, and added MagicInfo for on-site digital signage.
+        climate and relays, migrated Nextcloud to the All-in-One distribution (converting its database from
+        MariaDB to PostgreSQL in a planned maintenance window), and added MagicInfo for on-site
+        digital signage.
       </p>
       <p class="muted">
         The short-term rental business opened in September 2026, and the Nuki–Lodgify check-in/check-out
