@@ -55,8 +55,10 @@
 
       <h2>Motivation</h2>
       <p>
-        This homelab was designed to move beyond theoretical practice and cloud-only experimentation, towards a real
-        infrastructure platform that behaves like a small-scale production environment.
+        This homelab was designed to move beyond coursework and one-off test setups, towards a real
+        infrastructure platform that behaves like a small-scale production environment. The stack is open
+        source (Proxmox, ZFS, Nextcloud, NGINX), chosen for flexibility, to avoid licence and vendor
+        lock-in, and to learn it hands-on.
       </p>
       <p>
         The aim was not simply to run virtual machines, but to operate an infrastructure capable of hosting real
@@ -277,7 +279,8 @@
       <p>
         The platform provides a stable environment for daily self-hosted services while also acting as an
         experimentation and learning platform. Off-site backups guarantee recovery from hardware and site-level
-        failures, and service separation allows controlled upgrades and debugging. The infrastructure was
+        failures, and service separation allows controlled upgrades and debugging. ZFS scrubs and SMART self-tests run on a
+        schedule, with alerts delivered by email through an SMTP relay. The infrastructure was
         intentionally designed to be extensible: additional Proxmox nodes or external storage can be added in
         the future without requiring major architectural changes.
       </p>
